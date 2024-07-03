@@ -5,7 +5,7 @@ namespace App\Services\Articles;
 
 use App\Repositories\Articles\ArticleRepositoryInterface;
 
-class DeleteArticleService
+class DestroyArticleService
 {
     private ArticleRepositoryInterface $articleRepository;
 
