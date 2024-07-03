@@ -4,8 +4,9 @@ declare(strict_types=1);
 namespace App\Controllers\Articles;
 
 use App\Models\Article;
+use App\Repositories\Articles\Exceptions\ArticleCreationFailedException;
+use App\Repositories\Articles\Exceptions\ArticleInsertionFailedException;
 use App\Responses\RedirectResponse;
-use App\Services\Articles\Exceptions\ArticleCreationFailedException;
 use App\Services\Articles\StoreArticleService;
 
 class StoreArticleController
@@ -17,15 +18,15 @@ class StoreArticleController
         $this->storeArticleService = $storeArticleService;
     }
 
-    public function __invoke()
+    public function __invoke(): RedirectResponse
     {
         $title = $_POST["title"];
         $content = $_POST["content"];
         $article = new Article($title, $content);
         try {
             $this->storeArticleService->execute($article);
-        } catch (ArticleCreationFailedException $e) {
-            echo "oops didn't make article!!!"; // TODO: session error handling
+        } catch (ArticleInsertionFailedException $e) {
+            echo "oops didn't make article!!! {$e->getMessage()}"; // TODO: session error handling
         }
         return new RedirectResponse("/articles");
     }

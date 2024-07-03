@@ -1,0 +1,13 @@
+{% extends "partials/_base.html.twig" %}
+
+{% block title %} New article {% endblock %}
+{% block content %}
+    <form action="/articles/{{ article.id }}" method="post">
+        <input type="hidden" name="_method" value="patch"><br>
+        <label for="title">Title</label><br>
+        <input type="text" name="title" id="title" value="{{ article.title }}" required="required"><br>
+        <label for="content">Content</label><br>
+        <input type="text" name="content" id="content" value="{{ article.content }}" required="required"><br>
+        <input type="submit" value="Submit">
+    </form>
+{% endblock %}

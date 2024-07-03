@@ -10,6 +10,9 @@
             <input type="hidden" name="_method" value="delete"><br>
             <input type="submit" value="Delete article">
         </form>
+        <form action="/articles/{{ article.id }}/edit" method="get">
+            <input type="submit" value="Edit article">
+        </form>
     {% else %}
         <p>Article not found.</p>
     {% endif %}

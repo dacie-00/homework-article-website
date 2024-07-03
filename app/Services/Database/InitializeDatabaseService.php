@@ -38,6 +38,8 @@ class InitializeDatabaseService
 
                 $table->addColumn("title", "string");
                 $table->addColumn("content", "text");
+                $table->addColumn("created_at", "string");
+                $table->addColumn("updated_at", "string");
                 $this->schemaManager->createTable($table);
             }
         } catch (SchemaException $e) {

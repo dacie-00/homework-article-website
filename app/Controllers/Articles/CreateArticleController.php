@@ -9,6 +9,6 @@ class CreateArticleController
 {
     public function __invoke()
     {
-        return new TemplateResponse("articles/write");
+        return new TemplateResponse("articles/create");
     }
 }
