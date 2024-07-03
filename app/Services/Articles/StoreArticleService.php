@@ -5,7 +5,7 @@ namespace App\Services\Articles;
 
 use App\Models\Article;
 use App\Repositories\Articles\ArticleRepositoryInterface;
-use App\Repositories\Exception\DatabaseInsertionFailedException;
+use App\Repositories\Exception\RepositoryInsertionFailedException;
 use App\Services\Articles\Exceptions\ArticleCreationFailedException;
 
 class StoreArticleService
@@ -21,7 +21,7 @@ class StoreArticleService
     {
         try {
             $this->articleRepository->insert($article);
-        } catch (DatabaseInsertionFailedException $e) {
+        } catch (RepositoryInsertionFailedException $e) {
             throw new ArticleCreationFailedException("Failed to create article - " . $e->getMessage());
         }
     }

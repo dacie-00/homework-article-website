@@ -5,6 +5,6 @@ namespace App\Repositories\Exception;
 
 use Exception;
 
-class DatabaseInsertionFailedException extends Exception
+class RepositoryDeletionFailedException extends Exception
 {
 }

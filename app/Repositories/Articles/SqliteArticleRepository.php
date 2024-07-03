@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Repositories\Articles;
 
 use App\Models\Article;
+use App\Repositories\Exception\RepositoryDeletionFailedException;
 use App\Services\Articles\Exceptions\ArticleInsertionFailedException;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception;
@@ -81,5 +82,21 @@ class SqliteArticleRepository implements ArticleRepositoryInterface
             );
         }
         return $articles;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function delete(string $articleId): void
+    {
+        try {
+            $this->connection->createQueryBuilder()
+                ->delete("articles")
+                ->where("article_id = :article_id")
+                ->setParameter("article_id", $articleId)
+                ->executeQuery();
+        } catch (Exception $e) {
+            throw new RepositoryDeletionFailedException("Failed to delete article with id $articleId");
+        }
     }
 }

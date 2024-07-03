@@ -48,6 +48,11 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
 });
 
 $httpMethod = $_SERVER['REQUEST_METHOD'];
+if ($httpMethod === "POST" && isset($_POST["_method"])) {
+    if (strtoupper($_POST["_method"]) === "DELETE") {
+        $httpMethod = "DELETE";
+    }
+}
 $uri = $_SERVER['REQUEST_URI'];
 
 if (false !== $pos = strpos($uri, '?')) {
