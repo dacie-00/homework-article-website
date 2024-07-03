@@ -1,19 +1,28 @@
 <?php
 declare(strict_types=1);
 
+use App\Responses\TemplateResponse;
+use App\Services\Database\InitializeDatabaseService;
 use DI\ContainerBuilder;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
+// TODO: make bootstrap file
+
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
-$loader = new FilesystemLoader("templates");
+$loader = new FilesystemLoader("views");
 $twig = new Environment($loader);
 
-$connectionParams = [
+$logger = new Logger("app");
+$logger->pushHandler(new StreamHandler("storage/app.log"));
+
+$connectionParameters = [
     "driver" => "pdo_sqlite",
     "path" => "storage/database.sqlite",
 ];
@@ -22,7 +31,13 @@ $builder = new ContainerBuilder();
 $builder->addDefinitions(
     include "app/DiContainerDefinitions.php"
 );
-$container = $builder->build();
+try {
+    $container = $builder->build();
+} catch (Exception $e) {
+    $logger->error($e->getMessage());
+}
+
+($container->get(InitializeDatabaseService::class))->execute();
 
 $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
     $routes = include __DIR__ . "/routes.php";
@@ -48,12 +63,15 @@ switch ($routeInfo[0]) {
     case FastRoute\Dispatcher::FOUND:
         $handle = $routeInfo[1];
         $vars = $routeInfo[2];
-        $response = $container->get($handle)(...array_values($vars));
-        echo $response;
-//        if ($response instanceof TemplateResponse) {
-//            echo $twig->render($response->template() . ".html.twig", $response->data());
+        try {
+            $response = $container->get($handle)(...array_values($vars));
+        } catch (Exception $e) {
+            $logger->error($e->getMessage());
+        }
+        if ($response instanceof TemplateResponse) {
+            echo $twig->render($response->template() . ".html.twig", $response->data());
 //        } elseif ($response instanceof RedirectResponse) {
 //            header("Location: {$response->url()}");
-//        }
+        }
         break;
 }
