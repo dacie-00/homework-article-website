@@ -4,13 +4,13 @@ declare(strict_types=1);
 namespace App\Controllers\Articles;
 
 use App\Responses\TemplateResponse;
-use App\Services\Articles\IndexArticlesService;
+use App\Services\Articles\IndexArticleService;
 
-class IndexArticlesController
+class IndexArticleController
 {
-    private IndexArticlesService $indexArticlesService;
+    private IndexArticleService $indexArticlesService;
 
-    public function __construct(IndexArticlesService $indexArticlesService)
+    public function __construct(IndexArticleService $indexArticlesService)
     {
         $this->indexArticlesService = $indexArticlesService;
     }

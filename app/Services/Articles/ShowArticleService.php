@@ -4,14 +4,14 @@ declare(strict_types=1);
 namespace App\Services\Articles;
 
 use App\Models\Article;
-use App\Repositories\Articles\ArticlesRepositoryInterface;
+use App\Repositories\Articles\ArticleRepositoryInterface;
 use App\Services\Articles\Exceptions\ArticleNotFoundException;
 
 class ShowArticleService
 {
-    private ArticlesRepositoryInterface $articlesRepository;
+    private ArticleRepositoryInterface $articlesRepository;
 
-    public function __construct(ArticlesRepositoryInterface $articlesRepository)
+    public function __construct(ArticleRepositoryInterface $articlesRepository)
     {
         $this->articlesRepository = $articlesRepository;
     }

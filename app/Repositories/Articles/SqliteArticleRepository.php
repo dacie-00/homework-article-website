@@ -8,7 +8,7 @@ use App\Services\Articles\Exceptions\ArticleInsertionFailedException;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception;
 
-class SqliteArticlesRepository implements ArticlesRepositoryInterface
+class SqliteArticleRepository implements ArticleRepositoryInterface
 {
     private Connection $connection;
 

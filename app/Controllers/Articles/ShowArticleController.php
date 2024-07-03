@@ -7,7 +7,7 @@ use App\Responses\TemplateResponse;
 use App\Services\Articles\Exceptions\ArticleNotFoundException;
 use App\Services\Articles\ShowArticleService;
 
-class ShowArticlesController
+class ShowArticleController
 {
     private ShowArticleService $showArticleService;
 

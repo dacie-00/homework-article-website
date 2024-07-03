@@ -6,13 +6,13 @@ namespace App\Controllers\Articles;
 use App\Models\Article;
 use App\Responses\RedirectResponse;
 use App\Services\Articles\Exceptions\ArticleCreationFailedException;
-use App\Services\Articles\StoreArticlesService;
+use App\Services\Articles\StoreArticleService;
 
-class StoreArticlesController
+class StoreArticleController
 {
-    private StoreArticlesService $storeArticlesService;
+    private StoreArticleService $storeArticlesService;
 
-    public function __construct(StoreArticlesService $storeArticlesService)
+    public function __construct(StoreArticleService $storeArticlesService)
     {
         $this->storeArticlesService = $storeArticlesService;
     }

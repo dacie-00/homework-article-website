@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
 
-use App\Controllers\Articles\IndexArticlesController;
-use App\Controllers\Articles\ShowArticlesController;
-use App\Controllers\Articles\StoreArticlesController;
-use App\Controllers\Articles\WriteArticlesController;
+use App\Controllers\Articles\IndexArticleController;
+use App\Controllers\Articles\ShowArticleController;
+use App\Controllers\Articles\StoreArticleController;
+use App\Controllers\Articles\WriteArticleController;
 
 return [
-    ["GET", "/articles", IndexArticlesController::class],
-    ["POST", "/articles", StoreArticlesController::class],
-    ["GET", "/articles/write", WriteArticlesController::class],
-    ["GET", "/articles/{id}", ShowArticlesController::class],
+    ["GET", "/articles", IndexArticleController::class],
+    ["POST", "/articles", StoreArticleController::class],
+    ["GET", "/articles/write", WriteArticleController::class],
+    ["GET", "/articles/{id}", ShowArticleController::class],
 ];

@@ -8,7 +8,7 @@ use App\Repositories\Exception\DatabaseInsertionFailedException;
 use App\Services\Articles\Exceptions\ArticleInsertionFailedException;
 use App\Services\Articles\Exceptions\ArticleNotFoundException;
 
-interface ArticlesRepositoryInterface
+interface ArticleRepositoryInterface
 {
     /**
      * @throws DatabaseInsertionFailedException

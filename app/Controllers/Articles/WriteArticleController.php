@@ -5,7 +5,7 @@ namespace App\Controllers\Articles;
 
 use App\Responses\TemplateResponse;
 
-class WriteArticlesController
+class WriteArticleController
 {
     public function __invoke()
     {

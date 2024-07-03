@@ -1,8 +1,8 @@
 <?php
 declare(strict_types=1);
 
-use App\Repositories\Articles\ArticlesRepositoryInterface;
-use App\Repositories\Articles\SqliteArticlesRepository;
+use App\Repositories\Articles\ArticleRepositoryInterface;
+use App\Repositories\Articles\SqliteArticleRepository;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
 use Monolog\Logger;
@@ -16,6 +16,6 @@ return [
     LoggerInterface::class => $logger,
     Connection::class =>
         DriverManager::getConnection($connectionParameters),
-    ArticlesRepositoryInterface::class =>
-        create(SqliteArticlesRepository::class)->constructor(get(Connection::class)),
+    ArticleRepositoryInterface::class =>
+        create(SqliteArticleRepository::class)->constructor(get(Connection::class)),
 ];
