@@ -8,7 +8,8 @@
             <h1>
                 <a href="articles/{{ article.id }}">{{ article.title }}</a>
             </h1>
-            <p>{{ article.content }}</p>
+{#          truncate and add "..." to long content snippets  #}
+            <p>{{ article.content|length > 100 ? article.content|slice(0, 100) ~ "..." : article.content}}</p>
         {% endfor %}
     {% else %}
         <p>There are currently no articles.</p>
