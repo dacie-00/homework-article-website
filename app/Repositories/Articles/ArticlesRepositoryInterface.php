@@ -16,4 +16,9 @@ interface ArticlesRepositoryInterface
     public function insert(Article $article): void;
 
     public function get(string $articleId): ?Article;
+
+    /**
+     * @return Article[]
+     */
+    public function getAll(): array;
 }

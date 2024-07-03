@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 
+use App\Responses\RedirectResponse;
 use App\Responses\TemplateResponse;
 use App\Services\Database\InitializeDatabaseService;
 use DI\ContainerBuilder;
@@ -70,8 +71,8 @@ switch ($routeInfo[0]) {
         }
         if ($response instanceof TemplateResponse) {
             echo $twig->render($response->template() . ".html.twig", $response->data());
-//        } elseif ($response instanceof RedirectResponse) {
-//            header("Location: {$response->url()}");
+        } elseif ($response instanceof RedirectResponse) {
+            header("Location: {$response->url()}");
         }
         break;
 }

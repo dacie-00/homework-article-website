@@ -54,6 +54,32 @@ class SqliteArticlesRepository implements ArticlesRepositoryInterface
         }
 
         // TODO: think about whether this building should happen here or in model (fromArray static?)
-        return new Article($articleData["title"], $articleData["content"], $articleData["article_id"]);
+        return new Article(
+            $articleData["title"],
+            $articleData["content"],
+            $articleData["article_id"]
+        );
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getAll(): array
+    {
+        $articleData = $this->connection->createQueryBuilder()
+            ->select("*")
+            ->from("articles")
+            ->executeQuery()
+            ->fetchAllAssociative();
+
+        $articles = [];
+        foreach($articleData as $article) {
+            $articles[] = new Article(
+                $article["title"],
+                $article["content"],
+                $article["article_id"]
+            );
+        }
+        return $articles;
     }
 }
