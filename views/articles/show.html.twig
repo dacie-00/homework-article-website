@@ -1,6 +1,12 @@
 {% extends "partials/_base.html.twig" %}
 
-{% block title %} Transaction list {% endblock %}
+{% block title %}
+    {% if article %}
+        {{ article.title }}
+    {% else %}
+        Article not found
+    {% endif %}
+{% endblock %}
 {% block content %}
     {% if article %}
         <p>Created at {{ article.createdAt|date }}, Updated at {{ article.updatedAt|date }}</p>

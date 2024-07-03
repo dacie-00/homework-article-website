@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace App\Controllers\Articles;
 
+use App\Repositories\Articles\Exceptions\ArticleNotFoundException;
 use App\Responses\TemplateResponse;
-use App\Services\Articles\Exceptions\ArticleNotFoundException;
 use App\Services\Articles\ShowArticleService;
 
 class ShowArticleController
