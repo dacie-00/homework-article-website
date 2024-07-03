@@ -1,17 +1,25 @@
 {% extends "partials/_base.html.twig" %}
+{% import "macros/styles.html.twig" as styles %}
 
 {% block title %} Article list {% endblock %}
 {% block content %}
     {% if articles %}
-        {% for article in articles %}
-            <p>Created at {{ article.createdAt|date }}, Updated at {{ article.updatedAt|date }}</p>
-            <h1>
-                <a href="articles/{{ article.id }}">{{ article.title }}</a>
-            </h1>
-{#          truncate and add "..." to long content snippets  #}
-            <p>{{ article.content|length > 100 ? article.content|slice(0, 100) ~ "..." : article.content}}</p>
-        {% endfor %}
+        <h1 class="text-gray-300 text-4xl py-2">
+            Articles
+        </h1>
+        <div class="grid grid-cols-2">
+            {% for article in articles %}
+                <div class="flex flex-col max-w-xl bg-gray-800 p-4 m-4 rounded shadow-xl hover:scale-105 hover:shadow-2xl hover:brightness-105 transition-transform ease-in-out">
+                    <h2 class="text-gray-300 text-2xl pb-2 hover:text-gray-100">
+                        <a href="articles/{{ article.id }}">{{ article.title }}</a>
+                    </h2>
+                    {# truncate and add "..." to long content snippets #}
+                    <p class="text-gray-400 flex-auto">{{ article.content|length > 100 ? article.content|slice(0, 100) ~ "..." : article.content }}</p>
+                    <p class="text-gray-500 justify-self-end">Created at {{ article.createdAt|date }}{% if article.updatedAt != article.createdAt %}, updated at {{ article.updatedAt|date }} {% endif %}</p>
+                </div>
+            {% endfor %}
+        </div>
     {% else %}
-        <p>There are currently no articles.</p>
+        <p class="text-gray-400 text-2xl">There are currently no articles.</p>
     {% endif %}
 {% endblock %}
