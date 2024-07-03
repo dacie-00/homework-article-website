@@ -8,16 +8,16 @@ use App\Services\Articles\IndexArticleService;
 
 class IndexArticleController
 {
-    private IndexArticleService $indexArticlesService;
+    private IndexArticleService $indexArticleService;
 
-    public function __construct(IndexArticleService $indexArticlesService)
+    public function __construct(IndexArticleService $indexArticleService)
     {
-        $this->indexArticlesService = $indexArticlesService;
+        $this->indexArticleService = $indexArticleService;
     }
 
     public function __invoke(): TemplateResponse
     {
-        $articles = $this->indexArticlesService->execute();
+        $articles = $this->indexArticleService->execute();
 
         return new TemplateResponse("articles/index", ["articles" => $articles]);
     }

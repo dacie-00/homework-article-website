@@ -9,16 +9,16 @@ use App\Services\Articles\Exceptions\ArticleNotFoundException;
 
 class ShowArticleService
 {
-    private ArticleRepositoryInterface $articlesRepository;
+    private ArticleRepositoryInterface $articleRepository;
 
-    public function __construct(ArticleRepositoryInterface $articlesRepository)
+    public function __construct(ArticleRepositoryInterface $articleRepository)
     {
-        $this->articlesRepository = $articlesRepository;
+        $this->articleRepository = $articleRepository;
     }
 
     public function execute(string $id): Article
     {
-        $article = $this->articlesRepository->get($id);
+        $article = $this->articleRepository->get($id);
         if (is_null($article)) {
             throw new ArticleNotFoundException("Article with id {$id} not found");
         }

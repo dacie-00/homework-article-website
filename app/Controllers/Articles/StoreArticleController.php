@@ -10,11 +10,11 @@ use App\Services\Articles\StoreArticleService;
 
 class StoreArticleController
 {
-    private StoreArticleService $storeArticlesService;
+    private StoreArticleService $storeArticleService;
 
-    public function __construct(StoreArticleService $storeArticlesService)
+    public function __construct(StoreArticleService $storeArticleService)
     {
-        $this->storeArticlesService = $storeArticlesService;
+        $this->storeArticleService = $storeArticleService;
     }
 
     public function __invoke()
@@ -23,7 +23,7 @@ class StoreArticleController
         $content = $_POST["content"];
         $article = new Article($title, $content);
         try {
-            $this->storeArticlesService->execute($article);
+            $this->storeArticleService->execute($article);
         } catch (ArticleCreationFailedException $e) {
             echo "oops didn't make article!!!"; // TODO: session error handling
         }

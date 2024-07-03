@@ -9,11 +9,11 @@ use App\Repositories\Articles\ArticleRepositoryInterface;
 class IndexArticleService
 {
 
-    private ArticleRepositoryInterface $articlesRepository;
+    private ArticleRepositoryInterface $articleRepository;
 
-    public function __construct(ArticleRepositoryInterface $articlesRepository)
+    public function __construct(ArticleRepositoryInterface $articleRepository)
     {
-        $this->articlesRepository = $articlesRepository;
+        $this->articleRepository = $articleRepository;
     }
 
     /**
@@ -21,6 +21,6 @@ class IndexArticleService
      */
     public function execute(): array
     {
-        return $this->articlesRepository->getAll();
+        return $this->articleRepository->getAll();
     }
 }

@@ -10,17 +10,17 @@ use App\Services\Articles\Exceptions\ArticleCreationFailedException;
 
 class StoreArticleService
 {
-    private ArticleRepositoryInterface $articlesRepository;
+    private ArticleRepositoryInterface $articleRepository;
 
-    public function __construct(ArticleRepositoryInterface $articlesRepository)
+    public function __construct(ArticleRepositoryInterface $articleRepository)
     {
-        $this->articlesRepository = $articlesRepository;
+        $this->articleRepository = $articleRepository;
     }
 
     public function execute(Article $article): void
     {
         try {
-            $this->articlesRepository->insert($article);
+            $this->articleRepository->insert($article);
         } catch (DatabaseInsertionFailedException $e) {
             throw new ArticleCreationFailedException("Failed to create article - " . $e->getMessage());
         }
