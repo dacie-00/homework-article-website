@@ -4,6 +4,7 @@
 {% block content %}
     {% if articles %}
         {% for article in articles %}
+            <p>Created at {{ article.createdAt|date }}, Updated at {{ article.updatedAt|date }}</p>
             <h1>
                 <a href="articles/{{ article.id }}">{{ article.title }}</a>
             </h1>

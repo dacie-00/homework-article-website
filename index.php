@@ -8,6 +8,7 @@ use DI\ContainerBuilder;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Twig\Environment;
+use Twig\Extension\CoreExtension;
 use Twig\Loader\FilesystemLoader;
 
 require_once __DIR__ . '/vendor/autoload.php';
@@ -19,6 +20,7 @@ $dotenv->load();
 
 $loader = new FilesystemLoader("views");
 $twig = new Environment($loader);
+$twig->getExtension(CoreExtension::class)->setTimezone("Europe/Riga");
 
 $logger = new Logger("app");
 $logger->pushHandler(new StreamHandler("storage/app.log"));

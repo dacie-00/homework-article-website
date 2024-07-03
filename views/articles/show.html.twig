@@ -3,9 +3,9 @@
 {% block title %} Transaction list {% endblock %}
 {% block content %}
     {% if article %}
+        <p>Created at {{ article.createdAt|date }}, Updated at {{ article.updatedAt|date }}</p>
         <h1>{{ article.title }}</h1>
         <p>{{ article.content }}</p>
-
         <form action="/articles/{{ article.id }}" method="post">
             <input type="hidden" name="_method" value="delete"><br>
             <input type="submit" value="Delete article">
