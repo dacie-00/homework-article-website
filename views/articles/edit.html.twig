@@ -2,6 +2,9 @@
 
 {% block title %} Editing - {{ article.title}} {% endblock %}
 {% block content %}
+    <h1 class="text-gray-300 text-4xl py-2">
+        Editing - {{ article.title }}
+    </h1>
     <form class="w-1/2 flex flex-col" action="/articles/{{ article.id }}" method="post">
         <label class="text-gray-300 text-xl py-2" for="title">Title</label><br>
         <input value="{{ article.title }}" class="min-h-10 max-w-96 p-2.5 w-full text-sm rounded-lg border bg-gray-700 border-gray-600 placeholder-gray-400 text-white outline-none focus:ring-gray-500 focus:border-gray-50" type="text" name="title" id="title" required="required"><br>
