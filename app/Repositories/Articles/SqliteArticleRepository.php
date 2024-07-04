@@ -64,14 +64,7 @@ class SqliteArticleRepository implements ArticleRepositoryInterface
             );
         }
 
-        // TODO: think about whether this building should happen here or in model (fromArray static?)
-        return new Article(
-            $articleData["title"],
-            $articleData["content"],
-            $articleData["article_id"],
-            Carbon::parse($articleData["created_at"]),
-            Carbon::parse($articleData["updated_at"]),
-        );
+        return Article::fromArray($articleData);
     }
 
     /**
@@ -87,13 +80,7 @@ class SqliteArticleRepository implements ArticleRepositoryInterface
 
         $articles = [];
         foreach ($articleData as $article) {
-            $articles[] = new Article(
-                $article["title"],
-                $article["content"],
-                $article["article_id"],
-                Carbon::parse($article["created_at"]),
-                Carbon::parse($article["updated_at"]),
-            );
+            $articles[] = Article::fromArray($article);
         }
         return $articles;
     }

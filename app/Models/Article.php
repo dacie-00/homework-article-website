@@ -67,4 +67,16 @@ class Article
     {
         $this->updatedAt = $updatedAt;
     }
+
+    public static function fromArray(array $arguments): Article
+    {
+        // TODO: add validation here?
+        return new self(
+            $arguments["title"],
+            $arguments["content"],
+            $arguments["article_id"],
+            Carbon::parse($arguments["created_at"]),
+            Carbon::parse($arguments["updated_at"]),
+        );
+    }
 }
