@@ -35,7 +35,7 @@ class StoreArticleController
         }
         $this->flashMessage->set(new Message(
             Message::TYPE_SUCCESS,
-            "Article '{$article->title()}' created successfully!",
+            "Article '{$article->title()}' has been successfully created!",
             ["articleId" => $article->id()]
         ));
         return new RedirectResponse("/articles");

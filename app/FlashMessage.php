@@ -10,7 +10,7 @@ class FlashMessage
         $_SESSION["flashMessage"] = [
             "type" => $message->type(),
             "message" => $message->message(),
-            "parameters" => $message->parameters()
+            "parameters" => $message->parameters(),
         ];
     }
 

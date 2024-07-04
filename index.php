@@ -14,7 +14,7 @@ use Twig\Loader\FilesystemLoader;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-// TODO: make bootstrap file
+// TODO: make bootstrap file(s)
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();

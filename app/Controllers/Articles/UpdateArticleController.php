@@ -33,7 +33,8 @@ class UpdateArticleController
         try {
             $article = $this->getArticleService->execute($id);
         } catch (ArticleNotFoundException $e) {
-            echo "oopsie! article doesn't exist looool!!! {$e->getMessage()}";die;
+            echo "oopsie! article doesn't exist looool!!! {$e->getMessage()}";
+            die;
         }
         $this->updateArticleService->execute(
             $article, [

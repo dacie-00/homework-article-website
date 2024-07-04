@@ -6,7 +6,6 @@ namespace App\Services\Articles;
 use App\Models\Article;
 use App\Repositories\Articles\ArticleRepositoryInterface;
 use App\Repositories\Articles\Exceptions\ArticleInsertionFailedException;
-use App\Repositories\Exception\RepositoryInsertionFailedException;
 
 class StoreArticleService
 {

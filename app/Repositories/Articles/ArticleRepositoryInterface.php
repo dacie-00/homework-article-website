@@ -9,8 +9,6 @@ use App\Repositories\Articles\Exceptions\ArticleDeletionFailedException;
 use App\Repositories\Articles\Exceptions\ArticleInsertionFailedException;
 use App\Repositories\Articles\Exceptions\ArticleNotFoundException;
 use App\Repositories\Articles\Exceptions\ArticleUpdateFailedException;
-use App\Repositories\Exception\RepositoryDeletionFailedException;
-use App\Repositories\Exception\RepositoryInsertionFailedException;
 
 interface ArticleRepositoryInterface
 {

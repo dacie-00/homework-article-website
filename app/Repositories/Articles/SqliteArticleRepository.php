@@ -12,7 +12,6 @@ use Carbon\Carbon;
 use DateTimeInterface;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception;
-use Psr\Log\LoggerInterface;
 
 class SqliteArticleRepository implements ArticleRepositoryInterface
 {

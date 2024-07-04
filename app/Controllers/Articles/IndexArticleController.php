@@ -29,7 +29,7 @@ class IndexArticleController
             "articles/index",
             [
                 "articles" => $articles,
-                "flashMessage" => $flashMessage
+                "flashMessage" => $flashMessage,
             ]);
     }
 }
