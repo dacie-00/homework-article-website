@@ -52,7 +52,6 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
 
 $httpMethod = $_SERVER['REQUEST_METHOD'];
 if ($httpMethod === "POST" && isset($_POST["_method"])) {
-    // TODO: this seems redundant, but probably still need validation
     switch (strtoupper($_POST["_method"])) {
         case "DELETE":
             $httpMethod = "DELETE";
@@ -60,6 +59,8 @@ if ($httpMethod === "POST" && isset($_POST["_method"])) {
         case "PATCH":
             $httpMethod = "PATCH";
             break;
+        default:
+            $httpMethod = "GET";
     }
 }
 $uri = $_SERVER['REQUEST_URI'];
