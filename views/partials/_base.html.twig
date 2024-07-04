@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="min-h-full h-full">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -11,7 +11,7 @@
 <header>
     {% block header %}{{ include ("partials/_header.html.twig") }}{% endblock %}
 </header>
-<body>
-<div class="bg-gradient-to-b from-gray-900 to-slate-800 flex flex-col place-items-center justify-stretch">{% block content %}{% endblock %}</div>
+<body class="min-h-full h-full">
+<div class="min-h-full bg-gradient-to-b from-gray-900 to-slate-800 flex flex-col place-items-center justify-stretch">{% block content %}{% endblock %}</div>
 </body>
 </html>

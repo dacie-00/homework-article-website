@@ -2,11 +2,12 @@
 
 {% block title %} New article {% endblock %}
 {% block content %}
-    <form action="/articles" method="post">
-        <label for="title">Title</label><br>
-        <input type="text" name="title" id="title" required="required"><br>
-        <label for="content">Content</label><br>
-        <input type="text" name="content" id="content" required="required"><br>
-        <input type="submit" value="Submit">
+    <form class="w-1/2 flex flex-col" action="/articles" method="post">
+        <label class="text-gray-300 text-xl py-2" for="title">Title</label><br>
+        <input class="min-h-10 max-w-96 p-2.5 w-full text-sm rounded-lg border bg-gray-700 border-gray-600 placeholder-gray-400 text-white outline-none focus:ring-gray-500 focus:border-gray-50" type="text" name="title" id="title" required="required"><br>
+        <label class="text-gray-300 text-xl py-2" for="content">Content</label><br>
+{#        <input type="text" name="content" id="content" required="required"><br>#}
+        <textarea class="min-h-60 mb-4 p-2.5 w-full text-sm rounded-lg border bg-gray-700 border-gray-600 placeholder-gray-400 text-white outline-none focus:ring-gray-500 focus:border-gray-50" name="content" id="content" required="required"></textarea><br>
+        <input class="max-w-40 focus:ring-4 focus:outline-none border border-blue-700 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 border-blue-500 text-blue-500 hover:text-white hover:bg-blue-500 focus:ring-blue-800" type="submit" value="Submit">
     </form>
 {% endblock %}

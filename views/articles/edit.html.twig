@@ -1,13 +1,19 @@
 {% extends "partials/_base.html.twig" %}
+{% import "macros/styles.html.twig" as styles %}
 
 {% block title %} New article {% endblock %}
 {% block content %}
     <form action="/articles/{{ article.id }}" method="post">
         <input type="hidden" name="_method" value="patch"><br>
-        <label for="title">Title</label><br>
-        <input type="text" name="title" id="title" value="{{ article.title }}" required="required"><br>
-        <label for="content">Content</label><br>
-        <input type="text" name="content" id="content" value="{{ article.content }}" required="required"><br>
+        <div {{ styles.inputContainer() }}>
+            <input {{ styles.input() }} type="text" name="title" id="title" value="{{ article.title }}" required>
+            <label {{ styles.inputLabel() }} for="title">Title</label><br>
+        </div>
+        <div {{ styles.inputContainer() }}>
+            <input {{ styles.input() }} type="text" name="content" id="content" value="{{ article.content }}"
+                                         required>
+            <label {{ styles.inputLabel() }} for="content">Content</label><br>
+        </div>
         <input type="submit" value="Submit">
     </form>
 {% endblock %}
