@@ -3,8 +3,9 @@ declare(strict_types=1);
 
 namespace App\Controllers\Articles;
 
+use App\FlashMessage;
+use App\Message;
 use App\Models\Article;
-use App\Repositories\Articles\Exceptions\ArticleCreationFailedException;
 use App\Repositories\Articles\Exceptions\ArticleInsertionFailedException;
 use App\Responses\RedirectResponse;
 use App\Services\Articles\StoreArticleService;
@@ -12,10 +13,14 @@ use App\Services\Articles\StoreArticleService;
 class StoreArticleController
 {
     private StoreArticleService $storeArticleService;
+    private FlashMessage $flashMessage;
 
-    public function __construct(StoreArticleService $storeArticleService)
-    {
+    public function __construct(
+        StoreArticleService $storeArticleService,
+        FlashMessage $flashMessage
+    ) {
         $this->storeArticleService = $storeArticleService;
+        $this->flashMessage = $flashMessage;
     }
 
     public function __invoke(): RedirectResponse
@@ -28,6 +33,11 @@ class StoreArticleController
         } catch (ArticleInsertionFailedException $e) {
             echo "oops didn't make article!!! {$e->getMessage()}"; // TODO: session error handling
         }
+        $this->flashMessage->set(new Message(
+            Message::TYPE_SUCCESS,
+            "Article '{$article->title()}' created successfully!",
+            ["articleId" => $article->id()]
+        ));
         return new RedirectResponse("/articles");
     }
 }

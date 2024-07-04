@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Controllers\Articles;
 
+use App\FlashMessage;
+use App\Message;
 use App\Repositories\Articles\Exceptions\ArticleNotFoundException;
 use App\Responses\RedirectResponse;
 use App\Services\Articles\GetArticleService;
@@ -12,13 +14,16 @@ class UpdateArticleController
 {
     private UpdateArticleService $updateArticleService;
     private GetArticleService $getArticleService;
+    private FlashMessage $flashMessage;
 
     public function __construct(
         UpdateArticleService $updateArticleService,
-        GetArticleService $getArticleService
+        GetArticleService $getArticleService,
+        FlashMessage $flashMessage
     ) {
         $this->updateArticleService = $updateArticleService;
         $this->getArticleService = $getArticleService;
+        $this->flashMessage = $flashMessage;
     }
 
     public function __invoke(string $id): RedirectResponse
@@ -37,6 +42,12 @@ class UpdateArticleController
             ]
         );
 
-        return new RedirectResponse("{$id}");
+        $this->flashMessage->set(new Message(
+            Message::TYPE_SUCCESS,
+            "Article '{$article->title()}' updated successfully!",
+            ["articleId" => $article->id()]
+        ));
+
+        return new RedirectResponse("/articles");
     }
 }

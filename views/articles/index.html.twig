@@ -2,14 +2,19 @@
 
 {% block title %} Article list {% endblock %}
 {% block content %}
+    <h1 class="text-gray-300 text-4xl py-2">
+        Articles
+    </h1>
+    {% if flashMessage %}
+    <p class="text-gray-400 text-2xl py-2">
+        {{ flashMessage.message }}
+    </p>
+    {% endif %}
     {% if articles %}
-        <h1 class="text-gray-300 text-4xl py-2">
-            Articles
-        </h1>
         <div class="grid grid-cols-2">
-            {% for article in articles %}
+            {% for article in articles|reverse %}
                 <div class="max-h-40 flex flex-col max-w-xl bg-gray-800 p-4 m-4 rounded-md shadow-xl hover:scale-105 hover:shadow-2xl hover:brightness-105 transition-transform ease-in-out">
-                    <h2 class="text-gray-300 text-2xl pb-2 hover:text-gray-100">
+                    <h2 class="text-{{ article.id == flashMessage.parameters["articleId"] ? "green" : "gray" }}-300 text-2xl pb-2 hover:text-{{ article.id == flashMessage.parameters["articleId"] ? "green" : "gray" }}-100">
                         <a href="articles/{{ article.id }}">{{ article.title }}</a>
                     </h2>
                     {# truncate and add "..." to long content snippets #}
