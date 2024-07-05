@@ -7,7 +7,6 @@ use App\Models\Article;
 use App\Repositories\Articles\ArticleRepositoryInterface;
 use App\Repositories\Articles\Exceptions\ArticleFetchFailedException;
 use App\Repositories\Articles\Exceptions\ArticleNotFoundException;
-use App\Repositories\Articles\Exceptions\ArticleUpdateFailedException;
 
 class GetArticleService
 {

@@ -3,11 +3,8 @@ declare(strict_types=1);
 
 namespace App\Controllers\Articles;
 
-use App\FlashMessage;
-use App\Message;
 use App\Repositories\Articles\Exceptions\ArticleFetchFailedException;
 use App\Repositories\Articles\Exceptions\ArticleNotFoundException;
-use App\Responses\RedirectResponse;
 use App\Responses\TemplateResponse;
 use App\Services\Articles\GetArticleService;
 use Psr\Log\LoggerInterface;
