@@ -19,7 +19,7 @@ class EditArticleController
 
     public function __construct(
         GetArticleService $getArticleService,
-        LoggerInterface $logger,
+        LoggerInterface $logger
     ) {
         $this->getArticleService = $getArticleService;
         $this->logger = $logger;
