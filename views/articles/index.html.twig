@@ -6,7 +6,7 @@
         Articles
     </h1>
     {% if flashMessage %}
-    <p class="text-gray-400 text-2xl py-2">
+    <p class="text-{{ flashMessage.type == "error" ? "red" : "gray" }}-400 text-2xl py-2">
         {{ flashMessage.message }}
     </p>
     {% endif %}

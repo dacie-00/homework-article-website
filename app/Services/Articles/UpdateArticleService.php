@@ -17,6 +17,9 @@ class UpdateArticleService
         $this->articleRepository = $articleRepository;
     }
 
+    /**
+     * @throws ArticleUpdateFailedException
+     */
     public function execute(Article $article, array $data): void
     {
         if (isset($data["title"])) {
@@ -27,9 +30,6 @@ class UpdateArticleService
         }
         $article->setUpdatedAt(Carbon::now("UTC"));
 
-        try {
-            $this->articleRepository->update($article);
-        } catch (ArticleUpdateFailedException $e) {
-        }
+        $this->articleRepository->update($article);
     }
 }

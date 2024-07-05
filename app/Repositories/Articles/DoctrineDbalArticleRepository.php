@@ -5,6 +5,7 @@ namespace App\Repositories\Articles;
 
 use App\Models\Article;
 use App\Repositories\Articles\Exceptions\ArticleDeletionFailedException;
+use App\Repositories\Articles\Exceptions\ArticleFetchFailedException;
 use App\Repositories\Articles\Exceptions\ArticleInsertionFailedException;
 use App\Repositories\Articles\Exceptions\ArticleNotFoundException;
 use App\Repositories\Articles\Exceptions\ArticleUpdateFailedException;
@@ -13,7 +14,7 @@ use DateTimeInterface;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception;
 
-class SqliteArticleRepository implements ArticleRepositoryInterface
+class DoctrineDbalArticleRepository implements ArticleRepositoryInterface
 {
     private Connection $connection;
 
@@ -50,13 +51,17 @@ class SqliteArticleRepository implements ArticleRepositoryInterface
 
     public function get(string $articleId): ?Article
     {
-        $articleData = $this->connection->createQueryBuilder()
-            ->select("*")
-            ->from("articles")
-            ->where("article_id = :article_id")
-            ->setParameter("article_id", $articleId)
-            ->executeQuery()
-            ->fetchAssociative();
+        try {
+            $articleData = $this->connection->createQueryBuilder()
+                ->select("*")
+                ->from("articles")
+                ->where("article_id = :article_id")
+                ->setParameter("article_id", $articleId)
+                ->executeQuery()
+                ->fetchAssociative();
+        } catch (Exception $e) {
+            throw new ArticleFetchFailedException($e->getMessage());
+        }
 
         if ($articleData === false) {
             throw new ArticleNotFoundException(

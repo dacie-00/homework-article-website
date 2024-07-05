@@ -1,0 +1,16 @@
+{% extends "partials/_base.html.twig" %}
+
+{% block title %} Not found {% endblock %}
+{% block content %}
+<p class="text-gray-400 text-2xl py-2">
+    {% if message %}
+        Internal server error -
+        {{ message }}
+    {% elseif flashMessage %}
+        Internal server error -
+        {{ flashMessage.message }}
+    {% else %}
+        Internal server error
+    {% endif %}
+</p>
+{% endblock %}

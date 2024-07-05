@@ -6,6 +6,7 @@ namespace App\Repositories\Articles;
 use App\Models\Article;
 use App\Repositories\Articles\Exceptions\ArticleCreationFailedException;
 use App\Repositories\Articles\Exceptions\ArticleDeletionFailedException;
+use App\Repositories\Articles\Exceptions\ArticleFetchFailedException;
 use App\Repositories\Articles\Exceptions\ArticleInsertionFailedException;
 use App\Repositories\Articles\Exceptions\ArticleNotFoundException;
 use App\Repositories\Articles\Exceptions\ArticleUpdateFailedException;
@@ -18,6 +19,7 @@ interface ArticleRepositoryInterface
     public function insert(Article $article): void;
 
     /**
+     * @throws ArticleFetchFailedException
      * @throws ArticleNotFoundException
      */
     public function get(string $articleId): ?Article;
