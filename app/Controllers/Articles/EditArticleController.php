@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Controllers\Articles;
 
+use App\FlashMessage;
 use App\Repositories\Articles\Exceptions\ArticleFetchFailedException;
 use App\Repositories\Articles\Exceptions\ArticleNotFoundException;
 use App\Responses\TemplateResponse;
@@ -13,13 +14,16 @@ class EditArticleController
 {
     private GetArticleService $getArticleService;
     private LoggerInterface $logger;
+    private FlashMessage $flashMessage;
 
     public function __construct(
         GetArticleService $getArticleService,
-        LoggerInterface $logger
+        LoggerInterface $logger,
+        FlashMessage $flashMessage
     ) {
         $this->getArticleService = $getArticleService;
         $this->logger = $logger;
+        $this->flashMessage = $flashMessage;
     }
 
     public function __invoke(string $id): TemplateResponse
@@ -33,6 +37,8 @@ class EditArticleController
             $this->logger->error("Failed to fetch article - {$e->getMessage()}");
             return new TemplateResponse("errors/500", ["message" => "failed to fetch article"]);
         }
-        return new TemplateResponse("articles/edit", ["article" => $article]);
+
+        $flashMessage = $this->flashMessage->get();
+        return new TemplateResponse("articles/edit", ["article" => $article, "flashMessage" => $flashMessage]);
     }
 }

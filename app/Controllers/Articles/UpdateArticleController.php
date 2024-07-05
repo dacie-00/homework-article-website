@@ -9,6 +9,9 @@ use App\Repositories\Articles\Exceptions\ArticleFetchFailedException;
 use App\Repositories\Articles\Exceptions\ArticleNotFoundException;
 use App\Repositories\Articles\Exceptions\ArticleUpdateFailedException;
 use App\Responses\RedirectResponse;
+use App\Services\Articles\ArticleValidationService;
+use App\Services\Articles\Exceptions\InvalidArticleContentException;
+use App\Services\Articles\Exceptions\InvalidArticleTitleException;
 use App\Services\Articles\GetArticleService;
 use App\Services\Articles\UpdateArticleService;
 use Psr\Log\LoggerInterface;
@@ -17,17 +20,20 @@ class UpdateArticleController
 {
     private UpdateArticleService $updateArticleService;
     private GetArticleService $getArticleService;
+    private ArticleValidationService $articleValidationService;
     private FlashMessage $flashMessage;
     private LoggerInterface $logger;
 
     public function __construct(
         UpdateArticleService $updateArticleService,
         GetArticleService $getArticleService,
+        ArticleValidationService $articleValidationService,
         FlashMessage $flashMessage,
         LoggerInterface $logger
     ) {
         $this->updateArticleService = $updateArticleService;
         $this->getArticleService = $getArticleService;
+        $this->articleValidationService = $articleValidationService;
         $this->flashMessage = $flashMessage;
         $this->logger = $logger;
     }
@@ -36,7 +42,20 @@ class UpdateArticleController
     {
         $title = $_POST["title"];
         $content = $_POST["content"];
-        // TODO: validate and sanitize input
+        try {
+            $this->articleValidationService->execute($title, $content);
+        } catch (InvalidArticleTitleException|InvalidArticleContentException $e) {
+            $this->flashMessage->set(new Message(
+                Message::TYPE_ERROR,
+                $e->getMessage(),
+                [
+                    "issue" => $e instanceof InvalidArticleTitleException ? "title" : "content",
+                    "title" => "$title",
+                    "content" => "$content",
+                ]
+            ));
+            return new RedirectResponse("/articles/$id/edit");
+        }
         try {
             $article = $this->getArticleService->execute($id);
         } catch (ArticleNotFoundException $e) {
