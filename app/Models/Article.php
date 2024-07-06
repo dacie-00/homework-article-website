@@ -11,6 +11,7 @@ class Article
     private string $title;
     private string $content;
     private string $id;
+    private int $likes;
     private Carbon $createdAt;
     private Carbon $updatedAt;
 
@@ -18,12 +19,14 @@ class Article
         string $title,
         string $content,
         string $id = null,
+        int $likes = 0,
         Carbon $createdAt = null,
         Carbon $updatedAt = null
     ) {
         $this->title = $title;
         $this->content = $content;
         $this->id = $id ?: Uuid::uuid4()->toString();
+        $this->likes = $likes;
         $this->createdAt = $createdAt ?: Carbon::now("UTC");
         $this->updatedAt = $updatedAt ?: Carbon::now("UTC");
     }
@@ -36,6 +39,11 @@ class Article
     public function content(): string
     {
         return $this->content;
+    }
+
+    public function likes(): int
+    {
+        return $this->likes;
     }
 
     public function id(): string
@@ -75,6 +83,7 @@ class Article
             $arguments["title"],
             $arguments["content"],
             $arguments["article_id"],
+            (int)$arguments["likes"],
             Carbon::parse($arguments["created_at"]),
             Carbon::parse($arguments["updated_at"]),
         );

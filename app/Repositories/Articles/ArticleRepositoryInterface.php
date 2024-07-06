@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Repositories\Articles;
 
 use App\Models\Article;
-use App\Repositories\Articles\Exceptions\ArticleCreationFailedException;
 use App\Repositories\Articles\Exceptions\ArticleDeletionFailedException;
 use App\Repositories\Articles\Exceptions\ArticleFetchFailedException;
 use App\Repositories\Articles\Exceptions\ArticleInsertionFailedException;
@@ -38,4 +37,10 @@ interface ArticleRepositoryInterface
      * @throws ArticleUpdateFailedException
      */
     public function update(Article $article);
+
+    /**
+     * @throws ArticleUpdateFailedException
+     * @throws ArticleNotFoundException
+     */
+    public function like(string $articleId);
 }

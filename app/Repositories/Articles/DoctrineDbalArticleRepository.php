@@ -32,12 +32,14 @@ class DoctrineDbalArticleRepository implements ArticleRepositoryInterface
                     "article_id" => ":article_id",
                     "title" => ":title",
                     "content" => ":content",
+                    "likes" => ":likes",
                     "created_at" => ":created_at",
                     "updated_at" => ":updated_at",
                 ])
                 ->setParameters([
                     "article_id" => $article->id(),
                     "title" => $article->title(),
+                    "likes" => $article->likes(),
                     "content" => $article->content(),
                     "created_at" => $article->createdAt()->timezone("UTC")->format(DateTimeInterface::ATOM),
                     "updated_at" => $article->updatedAt()->timezone("UTC")->format(DateTimeInterface::ATOM),
@@ -133,6 +135,31 @@ class DoctrineDbalArticleRepository implements ArticleRepositoryInterface
             throw new ArticleUpdateFailedException(
                 "Article {$article->id()} update failed - {$e->getMessage()}"
             );
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function like(string $articleId)
+    {
+        try {
+            $result = $this->connection->createQueryBuilder()
+                ->update("articles")
+                ->where("article_id = :article_id")
+                ->set("likes", "likes + 1")
+                ->setParameters([
+                    "article_id" => $articleId,
+                ])
+                ->executeQuery()
+                ->rowCount();
+        } catch (Exception $e) {
+            throw new ArticleUpdateFailedException(
+                "Article $articleId like increment failed - {$e->getMessage()}"
+            );
+        }
+        if ($result === 0) {
+            throw new ArticleNotFoundException("Article {$articleId} doesn't exist");
         }
     }
 }
