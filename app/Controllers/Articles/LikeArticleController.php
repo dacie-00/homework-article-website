@@ -25,10 +25,10 @@ class LikeArticleController
             $this->likeArticleService->execute($id);
             http_response_code(200);
         } catch (ArticleNotFoundException $e) {
-            $this->logger->error("Like increment failed - " . $e->getMessage());
+            $this->logger->error($e->getMessage());
             http_response_code(404);
         } catch (ArticleUpdateFailedException $e) {
-            $this->logger->error("Like increment failed - " . $e->getMessage());
+            $this->logger->error($e->getMessage());
             http_response_code(500);
         }
     }
