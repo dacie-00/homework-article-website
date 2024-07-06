@@ -9,7 +9,7 @@ window.onload = function(){
         const id = event.target.parentNode.getAttribute("data-id");
         const http = new XMLHttpRequest();
 
-        http.open("POST", `/articles/${id}:like`, true);
+        http.open("POST", `/articles/${id}/likes`, true);
         http.setRequestHeader("Content-type", "application/json");
         http.send();
 

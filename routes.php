@@ -21,7 +21,7 @@ return [
     ["POST", "/articles", StoreArticleController::class],
     ["DELETE", "/articles/{id}", DestroyArticleController::class],
     ["PATCH", "/articles/{id}", UpdateArticleController::class],
-    ["POST", "/articles/{id}:like", LikeArticleController::class],
+    ["POST", "/articles/{id}/likes", LikeArticleController::class],
     ["GET", "/articles/{id}/edit", EditArticleController::class],
     ["GET", "/articles/write", CreateArticleController::class],
     ["GET", "/articles/{id}", ShowArticleController::class],
