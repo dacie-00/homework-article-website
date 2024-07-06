@@ -20,6 +20,7 @@
                     {# truncate and add "..." to long content snippets #}
                     <p class="text-gray-400 flex-auto whitespace-break-spaces line-clamp-1">{{ article.content|length > 100 ? article.content|slice(0, 100) ~ "..." : article.content }}</p>
                     <p class="text-gray-500 justify-self-end">Created on {{ article.createdAt|date }}{% if article.updatedAt != article.createdAt %}, updated on {{ article.updatedAt|date }} {% endif %}</p>
+                    <p class="text-gray-400">Likes - {{ article.likes }}</p>
                 </div>
             {% endfor %}
         </div>
