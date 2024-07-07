@@ -18,10 +18,10 @@ interface CommentRepositoryInterface
     public function insert(Comment $comment): void;
 
     /**
+     * @return Comment[]
      * @throws CommentFetchFailedException
-     * @throws CommentNotFoundException
      */
-    public function getForArticle(string $articleId): ?Comment;
+    public function getForArticle(string $articleId): array;
 
     /**
      * @throws CommentDeletionFailedException

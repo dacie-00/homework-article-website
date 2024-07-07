@@ -31,6 +31,16 @@
                     <input type="hidden" name="_method" value="delete">
                 </form>
             </div>
+            {% if comments %}
+                {% for comment in comments|reverse %}
+                    <div class="text-gray-400">
+                        <p>{{ comment.content }}</p>
+                        <p>{{ comment.userId }}</p>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>There aren't any comments on this article... yet!</p>
+            {% endif %}
             <div>
                 <form action="/comments" method="post">
                     <input type="hidden" name="article-id" value="{{ article.id }}">

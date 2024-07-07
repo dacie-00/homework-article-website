@@ -52,21 +52,29 @@ class DoctrineDbalCommentRepository implements CommentRepositoryInterface
         }
     }
 
-    public function getForArticle(string $articleId): Comment
+    /**
+     * @inheritDoc
+     */
+    public function getForArticle(string $articleId): array
     {
         try {
-            $commentData = $this->connection->createQueryBuilder()
+            $commentsData = $this->connection->createQueryBuilder()
                 ->select("*")
                 ->from("comments")
                 ->where("article_id = :article_id")
                 ->setParameter("article_id", $articleId)
                 ->executeQuery()
-                ->fetchAssociative();
+                ->fetchAllAssociative();
         } catch (Exception $e) {
             throw new CommentFetchFailedException($e->getMessage());
         }
 
-        return Comment::fromArray($commentData);
+        $comments = [];
+        foreach ($commentsData as $comment) {
+            $comments[] = Comment::fromArray($comment);
+
+        }
+        return $comments;
     }
 
     /**
