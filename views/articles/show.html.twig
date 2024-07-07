@@ -28,7 +28,17 @@
                 </form>
                 <form action="/articles/{{ article.id }}" method="post">
                     <input class="focus:ring-4 focus:outline-none border border-red-700 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 border-red-500 text-red-500 hover:text-white hover:bg-red-500 focus:ring-red-800" type="submit" value="Delete article">
-                    <input type="hidden" name="_method" value="delete"><br>
+                    <input type="hidden" name="_method" value="delete">
+                </form>
+            </div>
+            <div>
+                <form action="/comments" method="post">
+                    <input type="hidden" name="article-id" value="{{ article.id }}">
+                    <label for="user">User</label>
+                    <input type="text" name="user" id="user">
+                    <label for="content">Comment</label>
+                    <input type="text" name="content" id="content">
+                    <input type="submit" value="Send">
                 </form>
             </div>
         </div>

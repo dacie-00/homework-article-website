@@ -43,6 +43,18 @@ class InitializeDatabaseService
                 $table->addColumn("updated_at", "string");
                 $this->schemaManager->createTable($table);
             }
+            if (!$this->schemaManager->tablesExist(["comments"])) {
+                $table = new Table("comments");
+                $table->addColumn("comment_id", "string");
+                $table->setPrimaryKey(["comment_id"]);
+                $table->addColumn("user_id", "string");
+                $table->addColumn("article_id", "string");
+                $table->addColumn("content", "text");
+                $table->addColumn("likes", "integer");
+                $table->addColumn("created_at", "string");
+                $table->addColumn("updated_at", "string");
+                $this->schemaManager->createTable($table);
+            }
         } catch (SchemaException $e) {
         } catch (Exception $e) {
             throw new DatabaseInitializationFailedException("Failed to initialize database - $e");

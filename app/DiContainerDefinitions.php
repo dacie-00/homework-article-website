@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 use App\Repositories\Articles\ArticleRepositoryInterface;
 use App\Repositories\Articles\DoctrineDbalArticleRepository;
+use App\Repositories\Comments\CommentRepositoryInterface;
+use App\Repositories\Comments\DoctrineDbalCommentRepository;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
 use Monolog\Logger;
@@ -18,4 +20,6 @@ return [
         DriverManager::getConnection($connectionParameters),
     ArticleRepositoryInterface::class =>
         create(DoctrineDbalArticleRepository::class)->constructor(get(Connection::class)),
+    CommentRepositoryInterface::class =>
+        create(DoctrineDbalCommentRepository::class)->constructor(get(Connection::class)),
 ];
