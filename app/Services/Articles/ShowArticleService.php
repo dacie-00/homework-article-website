@@ -5,7 +5,8 @@ namespace App\Services\Articles;
 
 use App\Models\Article;
 use App\Repositories\Articles\ArticleRepositoryInterface;
-use App\Services\Articles\Exceptions\ArticleNotFoundException;
+use App\Repositories\Articles\Exceptions\ArticleFetchFailedException;
+use App\Repositories\Articles\Exceptions\ArticleNotFoundException;
 
 class ShowArticleService
 {
@@ -16,9 +17,12 @@ class ShowArticleService
         $this->articleRepository = $articleRepository;
     }
 
+    /**
+     * @throws ArticleNotFoundException
+     * @throws ArticleFetchFailedException
+     */
     public function execute(string $id): Article
     {
-        $article = $this->articleRepository->get($id);
-        return $article;
+        return $this->articleRepository->get($id);
     }
 }

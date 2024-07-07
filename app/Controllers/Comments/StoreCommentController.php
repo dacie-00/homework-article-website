@@ -8,7 +8,6 @@ use App\Message;
 use App\Models\Comment;
 use App\Repositories\Comments\Exceptions\CommentInsertionFailedException;
 use App\Responses\RedirectResponse;
-use App\Services\Articles\StoreArticleService;
 use App\Services\Comments\StoreCommentService;
 use Psr\Log\LoggerInterface;
 

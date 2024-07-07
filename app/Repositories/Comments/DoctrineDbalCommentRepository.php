@@ -96,7 +96,7 @@ class DoctrineDbalCommentRepository implements CommentRepositoryInterface
     /**
      * @inheritDoc
      */
-    public function like(string $commentId):void
+    public function like(string $commentId): void
     {
         try {
             $result = $this->connection->createQueryBuilder()
