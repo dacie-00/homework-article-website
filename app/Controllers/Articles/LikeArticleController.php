@@ -5,6 +5,7 @@ namespace App\Controllers\Articles;
 
 use App\Repositories\Articles\Exceptions\ArticleNotFoundException;
 use App\Repositories\Articles\Exceptions\ArticleUpdateFailedException;
+use App\Responses\RedirectResponse;
 use App\Services\Articles\LikeArticleService;
 use Psr\Log\LoggerInterface;
 
@@ -19,17 +20,14 @@ class LikeArticleController
         $this->logger = $logger;
     }
 
-    public function __invoke(string $id)
+    public function __invoke(string $articleId): RedirectResponse
     {
         try {
-            $this->likeArticleService->execute($id);
-            http_response_code(200);
-        } catch (ArticleNotFoundException $e) {
+            $this->likeArticleService->execute($articleId);
+            return new RedirectResponse("/articles/{$articleId}");
+        } catch (ArticleNotFoundException|ArticleUpdateFailedException $e) {
             $this->logger->error($e->getMessage());
-            http_response_code(404);
-        } catch (ArticleUpdateFailedException $e) {
-            $this->logger->error($e->getMessage());
-            http_response_code(500);
+            return new RedirectResponse("/articles/{$articleId}");
         }
     }
 }
