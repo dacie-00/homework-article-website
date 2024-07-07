@@ -14,14 +14,16 @@
             <h1 class="text-gray-300 text-center text-4xl py-2">{{ article.title }}</h1>
             <p class="text-gray-400 text-xl py-2 whitespace-break-spaces break-words">{{ article.content }}</p>
             <p class="text-gray-500">Created on {{ article.createdAt|date }}, Updated on {{ article.updatedAt|date }}</p>
-            <form action="{{ article.id }}/likes" method="post" class="w-full flex items-center like-container" data-id="{{ article.id }}">
+            <div class="w-full flex items-center">
+                <form action="{{ article.id }}/likes" method="post">
                 <button type="submit" class="text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center me-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800 dark:hover:bg-blue-500">
                     <svg class="pointer-events-none w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 18">
                         <path d="M3 7H1a1 1 0 0 0-1 1v8a2 2 0 0 0 4 0V8a1 1 0 0 0-1-1Zm12.954 0H12l1.558-4.5a1.778 1.778 0 0 0-3.331-1.06A24.859 24.859 0 0 1 6 6.8v9.586h.114C8.223 16.969 11.015 18 13.6 18c1.4 0 1.592-.526 1.88-1.317l2.354-7A2 2 0 0 0 15.954 7Z"/>
                     </svg>
                 </button>
-                <p class="text-gray-400">{{ article.likes }}</p>
-            </form>
+                <span class="text-gray-400">{{ article.likes }}</span>
+                </form>
+            </div>
             <div class="flex items-stretch w-full justify-between pt-4">
                 <form action="/articles/{{ article.id }}/edit" method="get">
                     <input class="focus:ring-4 focus:outline-none border border-blue-700 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 border-blue-500 text-blue-500 hover:text-white hover:bg-blue-500 focus:ring-blue-800" type="submit" value="Edit article">
@@ -34,11 +36,21 @@
             <p class="text-gray-300 text-center text-xl">Comments</p>
             {% if comments %}
                 {% for comment in comments|reverse %}
-                    <div class="text-gray-400 flex flex-col bg-gray-700 rounded-md m-4 p-4 focus:border focus:border-gray-500" tabindex="0">
+                    <div id="comment-{{ comment.id }}" class="text-gray-400 flex flex-col bg-gray-700 rounded-md m-4 p-4" tabindex="0">
                         <p class="text-m">{{ comment.userId }}</p>
                         <p class="text-sm">{{ comment.createdAt }}</p>
                         <p class="pt-2 whitespace-break-spaces break-words">{{ comment.content }}</p>
-                        <form class="place-self-center mt-4" action="/comments/{{ comment.id }}" method="post">
+                        <div class="w-full flex items-center">
+                            <form action="/comments/{{ comment.id }}/likes" method="post">
+                                <button type="submit" class="text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center me-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800 dark:hover:bg-blue-500">
+                                    <svg class="pointer-events-none w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 18">
+                                        <path d="M3 7H1a1 1 0 0 0-1 1v8a2 2 0 0 0 4 0V8a1 1 0 0 0-1-1Zm12.954 0H12l1.558-4.5a1.778 1.778 0 0 0-3.331-1.06A24.859 24.859 0 0 1 6 6.8v9.586h.114C8.223 16.969 11.015 18 13.6 18c1.4 0 1.592-.526 1.88-1.317l2.354-7A2 2 0 0 0 15.954 7Z"/>
+                                    </svg>
+                                </button>
+                                <span class="text-gray-400">{{ comment.likes }}</span>
+                            </form>
+                        </div>
+                        <form class="place-self-end mt-4" action="/comments/{{ comment.id }}" method="post">
                             <input class="focus:ring-4 focus:outline-none border border-red-700 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 border-red-500 text-red-500 hover:text-white hover:bg-red-500 focus:ring-red-800" type="submit" value="Delete comment">
                             <input type="hidden" name="_method" value="delete">
                         </form>

@@ -32,10 +32,10 @@ class DestroyArticleController
         $this->logger = $logger;
     }
 
-    public function __invoke(string $id): RedirectResponse
+    public function __invoke(string $articleId): RedirectResponse
     {
         try {
-            $article = $this->getArticleService->execute($id);
+            $article = $this->getArticleService->execute($articleId);
         } catch (ArticleNotFoundException $e) {
             $this->logger->error("Attempt to delete article that doesn't exist - {$e->getMessage()}");
             $this->flashMessage->set(new Message(
@@ -51,7 +51,7 @@ class DestroyArticleController
             ));
             return new RedirectResponse("/articles");
         }
-        $this->destroyArticleService->execute($id);
+        $this->destroyArticleService->execute($articleId);
 
         $this->flashMessage->set(new Message(
             Message::TYPE_SUCCESS,

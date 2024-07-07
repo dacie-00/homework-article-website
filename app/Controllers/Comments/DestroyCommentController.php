@@ -32,10 +32,10 @@ class DestroyCommentController
         $this->logger = $logger;
     }
 
-    public function __invoke(string $id): RedirectResponse
+    public function __invoke(string $commentId): RedirectResponse
     {
         try {
-            $comment = $this->getCommentService->execute($id);
+            $comment = $this->getCommentService->execute($commentId);
         } catch (CommentNotFoundException $e) {
             $this->logger->error("Attempt to delete comment that doesn't exist - {$e->getMessage()}");
             $this->flashMessage->set(new Message(
@@ -52,7 +52,7 @@ class DestroyCommentController
             return new RedirectResponse("/articles");
         }
         try {
-            $this->destroyCommentService->execute($id);
+            $this->destroyCommentService->execute($commentId);
         } catch (CommentDeletionFailedException $e) {
             $this->logger->error("Failed to delete comment - {$e->getMessage()}");
             $this->flashMessage->set(new Message(
