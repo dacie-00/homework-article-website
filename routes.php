@@ -9,6 +9,7 @@ use App\Controllers\Articles\LikeArticleController;
 use App\Controllers\Articles\ShowArticleController;
 use App\Controllers\Articles\StoreArticleController;
 use App\Controllers\Articles\UpdateArticleController;
+use App\Controllers\Comments\DestroyCommentController;
 use App\Controllers\Comments\StoreCommentController;
 use App\Controllers\Error\InternalServerErrorController;
 use App\Controllers\Error\NotFoundErrorController;
@@ -27,5 +28,5 @@ return [
     ["GET", "/articles/write", CreateArticleController::class],
     ["GET", "/articles/{id}", ShowArticleController::class],
     ["POST", "/comments", StoreCommentController::class],
-//    ["GET", "/comments?user={id}", IndexCommentController::class],
+    ["DELETE", "/comments/{id}", DestroyCommentController::class],
 ];

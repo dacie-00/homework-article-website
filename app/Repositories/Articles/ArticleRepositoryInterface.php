@@ -21,7 +21,7 @@ interface ArticleRepositoryInterface
      * @throws ArticleFetchFailedException
      * @throws ArticleNotFoundException
      */
-    public function get(string $articleId): ?Article;
+    public function get(string $articleId): Article;
 
     /**
      * @return Article[]

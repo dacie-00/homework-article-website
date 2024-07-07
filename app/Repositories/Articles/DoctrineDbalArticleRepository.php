@@ -50,7 +50,7 @@ class DoctrineDbalArticleRepository implements ArticleRepositoryInterface
         }
     }
 
-    public function get(string $articleId): ?Article
+    public function get(string $articleId): Article
     {
         try {
             $articleData = $this->connection->createQueryBuilder()
