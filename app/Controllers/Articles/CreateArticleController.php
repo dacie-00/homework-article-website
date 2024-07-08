@@ -16,7 +16,7 @@ class CreateArticleController
         $this->flashMessage = $flashMessage;
     }
 
-    public function __invoke()
+    public function __invoke(): TemplateResponse
     {
         $flashMessage = $this->flashMessage->get();
         return new TemplateResponse("articles/create", ["flashMessage" => $flashMessage]);

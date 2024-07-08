@@ -50,7 +50,9 @@ class StoreArticleController
             ));
             return new RedirectResponse("/articles/write");
         }
+
         $article = new Article($title, $content);
+
         try {
             $this->storeArticleService->execute($article);
         } catch (ArticleInsertionFailedException $e) {
@@ -61,6 +63,7 @@ class StoreArticleController
             ));
             return new RedirectResponse("/articles");
         }
+
         $this->flashMessage->set(new Message(
             Message::TYPE_SUCCESS,
             "Article '{$article->title()}' has been successfully created",

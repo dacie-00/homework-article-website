@@ -5,10 +5,10 @@ namespace App\Controllers\Articles;
 
 use App\FlashMessage;
 use App\Message;
+use App\Repositories\Articles\Exceptions\ArticleDeletionFailedException;
 use App\Repositories\Articles\Exceptions\ArticleFetchFailedException;
 use App\Repositories\Articles\Exceptions\ArticleNotFoundException;
 use App\Responses\RedirectResponse;
-use App\Responses\TemplateResponse;
 use App\Services\Articles\DestroyArticleService;
 use App\Services\Articles\GetArticleService;
 use Psr\Log\LoggerInterface;
@@ -51,7 +51,16 @@ class DestroyArticleController
             ));
             return new RedirectResponse("/articles");
         }
-        $this->destroyArticleService->execute($articleId);
+        try {
+            $this->destroyArticleService->execute($articleId);
+        } catch (ArticleDeletionFailedException $e) {
+            $this->logger->error("Failed to delete article - {$e->getMessage()}");
+            $this->flashMessage->set(new Message(
+                Message::TYPE_ERROR,
+                "Failed to delete article!",
+            ));
+            return new RedirectResponse("/articles");
+        }
 
         $this->flashMessage->set(new Message(
             Message::TYPE_SUCCESS,

@@ -6,7 +6,6 @@ namespace App\Services\Comments;
 use App\Models\Comment;
 use App\Repositories\Comments\CommentRepositoryInterface;
 use App\Repositories\Comments\Exceptions\CommentFetchFailedException;
-use App\Repositories\Comments\Exceptions\CommentNotFoundException;
 use Psr\Log\LoggerInterface;
 
 class IndexForArticleCommentService
