@@ -136,7 +136,7 @@ class DoctrineDbalCommentRepository implements CommentRepositoryInterface
                 "Comment $commentId deletion failed - {$e->getMessage()}"
             );
         }
-        if ($result !== false) { // TODO: check if this works
+        if ($result !== false) {
             throw new CommentNotFoundException(
                 "Can't delete article $commentId as it does not exist"
             );

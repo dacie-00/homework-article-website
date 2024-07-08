@@ -123,7 +123,7 @@ class DoctrineDbalArticleRepository implements ArticleRepositoryInterface
                 "Article $articleId deletion failed - {$e->getMessage()}"
             );
         }
-        if ($result !== false) { // TODO: check if this works
+        if ($result !== false) {
             throw new ArticleNotFoundException(
                 "Can't delete article $articleId as it does not exist"
             );
