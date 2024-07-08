@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Controllers\Articles;
 
+use App\FlashMessage;
 use App\Repositories\Articles\Exceptions\ArticleFetchFailedException;
 use App\Repositories\Articles\Exceptions\ArticleNotFoundException;
 use App\Responses\TemplateResponse;
@@ -13,17 +14,22 @@ class ShowArticleController
 {
     private ShowArticleService $showArticleService;
     private IndexForArticleCommentService $IndexForArticleCommentService;
+    private FlashMessage $flashMessage;
 
     public function __construct(
         ShowArticleService $showArticleService,
-        IndexForArticleCommentService $IndexForArticleCommentService
+        IndexForArticleCommentService $IndexForArticleCommentService,
+        FlashMessage $flashMessage
     ) {
         $this->showArticleService = $showArticleService;
         $this->IndexForArticleCommentService = $IndexForArticleCommentService;
+        $this->flashMessage = $flashMessage;
     }
 
     public function __invoke(string $id): TemplateResponse
     {
+        $flashMessage = $this->flashMessage->get();
+
         $comments = [];
         try {
             $article = $this->showArticleService->execute($id);
@@ -34,6 +40,7 @@ class ShowArticleController
             $comments = $this->IndexForArticleCommentService->execute($id);
         }
 
-        return new TemplateResponse("articles/show", ["article" => $article, "comments" => $comments]);
+        return new TemplateResponse("articles/show",
+            ["article" => $article, "comments" => $comments, "flashMessage" => $flashMessage]);
     }
 }

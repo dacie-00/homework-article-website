@@ -44,7 +44,6 @@ class StoreArticleController
                 Message::TYPE_ERROR,
                 $e->getMessage(),
                 [
-                    "issue" => $e instanceof InvalidArticleTitleException ? "title" : "content",
                     "title" => "$title",
                     "content" => "$content",
                 ]
