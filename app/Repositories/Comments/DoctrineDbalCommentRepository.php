@@ -9,6 +9,7 @@ use App\Repositories\Comments\Exceptions\CommentFetchFailedException;
 use App\Repositories\Comments\Exceptions\CommentInsertionFailedException;
 use App\Repositories\Comments\Exceptions\CommentNotFoundException;
 use App\Repositories\Comments\Exceptions\CommentUpdateFailedException;
+use Carbon\Carbon;
 use DateTimeInterface;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception;
@@ -75,7 +76,15 @@ class DoctrineDbalCommentRepository implements CommentRepositoryInterface
             );
         }
 
-        return Comment::fromArray($commentData);
+        return new Comment(
+            $commentData["content"],
+            $commentData["user_id"],
+            $commentData["article_id"],
+            $commentData["comment_id"],
+            (int)$commentData["likes"],
+            Carbon::parse($commentData["created_at"]),
+            Carbon::parse($commentData["updated_at"]),
+        );
     }
 
     /**
@@ -97,8 +106,15 @@ class DoctrineDbalCommentRepository implements CommentRepositoryInterface
 
         $comments = [];
         foreach ($commentsData as $comment) {
-            $comments[] = Comment::fromArray($comment);
-
+            $comments[] = new Comment(
+                $comment["content"],
+                $comment["user_id"],
+                $comment["article_id"],
+                $comment["comment_id"],
+                (int)$comment["likes"],
+                Carbon::parse($comment["created_at"]),
+                Carbon::parse($comment["updated_at"]),
+            );
         }
         return $comments;
     }

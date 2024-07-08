@@ -68,18 +68,4 @@ class Comment
     {
         return $this->updatedAt;
     }
-
-    public static function fromArray(array $arguments): Comment
-    {
-        // TODO: add validation here?
-        return new self(
-            $arguments["content"],
-            $arguments["user_id"],
-            $arguments["article_id"],
-            $arguments["comment_id"],
-            (int)$arguments["likes"],
-            Carbon::parse($arguments["created_at"]),
-            Carbon::parse($arguments["updated_at"]),
-        );
-    }
 }

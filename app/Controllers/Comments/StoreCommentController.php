@@ -66,11 +66,6 @@ class StoreCommentController
             ));
             return new RedirectResponse("/articles/$articleId#comment-{$comment->id()}");
         }
-        $this->flashMessage->set(new Message(
-            Message::TYPE_SUCCESS,
-            "Article '{$comment->id()}' has been successfully created",
-            ["articleId" => $comment->id()]
-        ));
         return new RedirectResponse("/articles/$articleId#comment-{$comment->id()}");
     }
 }

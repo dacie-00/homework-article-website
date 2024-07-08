@@ -9,6 +9,7 @@ use App\Repositories\Articles\Exceptions\ArticleFetchFailedException;
 use App\Repositories\Articles\Exceptions\ArticleInsertionFailedException;
 use App\Repositories\Articles\Exceptions\ArticleNotFoundException;
 use App\Repositories\Articles\Exceptions\ArticleUpdateFailedException;
+use Carbon\Carbon;
 use DateTimeInterface;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception;
@@ -70,7 +71,14 @@ class DoctrineDbalArticleRepository implements ArticleRepositoryInterface
             );
         }
 
-        return Article::fromArray($articleData);
+        return new Article(
+            $articleData["title"],
+            $articleData["content"],
+            $articleData["article_id"],
+            (int)$articleData["likes"],
+            Carbon::parse($articleData["created_at"]),
+            Carbon::parse($articleData["updated_at"]),
+        );
     }
 
     /**
@@ -78,15 +86,22 @@ class DoctrineDbalArticleRepository implements ArticleRepositoryInterface
      */
     public function getAll(): array
     {
-        $articleData = $this->connection->createQueryBuilder()
+        $articlesData = $this->connection->createQueryBuilder()
             ->select("*")
             ->from("articles")
             ->executeQuery()
             ->fetchAllAssociative();
 
         $articles = [];
-        foreach ($articleData as $article) {
-            $articles[] = Article::fromArray($article);
+        foreach ($articlesData as $articleData) {
+            $articles[] = new Article(
+                $articleData["title"],
+                $articleData["content"],
+                $articleData["article_id"],
+                (int)$articleData["likes"],
+                Carbon::parse($articleData["created_at"]),
+                Carbon::parse($articleData["updated_at"]),
+            );
         }
         return $articles;
     }
