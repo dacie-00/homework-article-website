@@ -1,5 +1,4 @@
 vendor
 .idea
-.env
 storage/*
 !storage/.gitkeep
