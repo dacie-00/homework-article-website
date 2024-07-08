@@ -49,7 +49,7 @@ class DestroyCommentController
                 Message::TYPE_ERROR,
                 "Failed to delete comment!",
             ));
-            return new RedirectResponse("/articles");
+            return new RedirectResponse("/articles/");
         }
         try {
             $this->destroyCommentService->execute($commentId);
@@ -67,7 +67,7 @@ class DestroyCommentController
             "Comment has been successfully deleted!",
         ));
 
-        return new RedirectResponse("/articles");
+        return new RedirectResponse("/articles/{$comment->articleId()}");
     }
 
 }
