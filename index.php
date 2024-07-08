@@ -14,11 +14,6 @@ use Twig\Loader\FilesystemLoader;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-// TODO: make bootstrap file(s)
-
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-$dotenv->load();
-
 $loader = new FilesystemLoader("views");
 $twig = new Environment($loader);
 $twig->getExtension(CoreExtension::class)->setTimezone("Europe/Riga");
