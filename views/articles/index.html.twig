@@ -2,13 +2,13 @@
 
 {% block title %} Article list {% endblock %}
 {% block content %}
-    <h1 class="text-gray-300 text-4xl py-2">
+    <h1 class="text-gray-300 text-4xl pt-4 pb-2">
         Articles
     </h1>
     {% if flashMessage %}
-    <p class="text-{{ flashMessage.type == "error" ? "red" : "gray" }}-400 text-2xl py-2">
-        {{ flashMessage.message }}
-    </p>
+        <p class="text-{{ flashMessage.type == "error" ? "red" : "gray" }}-400 text-2xl py-2">
+            {{ flashMessage.message }}
+        </p>
     {% endif %}
     {% if articles %}
         <div class="grid grid-cols-2">
@@ -19,7 +19,8 @@
                     </h2>
                     {# truncate and add "..." to long content snippets #}
                     <p class="text-gray-400 flex-auto whitespace-break-spaces line-clamp-1">{{ article.content|length > 100 ? article.content|slice(0, 100) ~ "..." : article.content }}</p>
-                    <p class="text-gray-500 justify-self-end">Created on {{ article.createdAt|date }}{% if article.updatedAt != article.createdAt %}, updated on {{ article.updatedAt|date }} {% endif %}</p>
+                    <p class="text-gray-500 justify-self-end">Created
+                                                              on {{ article.createdAt|date }}{% if article.updatedAt != article.createdAt %}, updated on {{ article.updatedAt|date }} {% endif %}</p>
                     <p class="text-gray-400">Likes - {{ article.likes }}</p>
                 </div>
             {% endfor %}
