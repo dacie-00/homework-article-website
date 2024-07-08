@@ -73,8 +73,7 @@ $uri = rawurldecode($uri);
 $routeInfo = $dispatcher->dispatch($httpMethod, $uri);
 switch ($routeInfo[0]) {
     case FastRoute\Dispatcher::NOT_FOUND:
-        echo "404";
-//        header("Location: /404");
+        header("Location: /404");
         break;
     case FastRoute\Dispatcher::FOUND:
         $handle = $routeInfo[1];
