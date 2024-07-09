@@ -5,6 +5,7 @@ namespace App\Services\Articles;
 
 use App\Models\Article;
 use App\Repositories\Articles\ArticleRepositoryInterface;
+use App\Repositories\Articles\Exceptions\ArticleFetchFailedException;
 
 class IndexArticleService
 {
@@ -18,6 +19,7 @@ class IndexArticleService
 
     /**
      * @return Article[]
+     * @throws ArticleFetchFailedException
      */
     public function execute(): array
     {

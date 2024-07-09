@@ -86,11 +86,15 @@ class DoctrineDbalArticleRepository implements ArticleRepositoryInterface
      */
     public function getAll(): array
     {
-        $articlesData = $this->connection->createQueryBuilder()
-            ->select("*")
-            ->from("articles")
-            ->executeQuery()
-            ->fetchAllAssociative();
+        try {
+            $articlesData = $this->connection->createQueryBuilder()
+                ->select("*")
+                ->from("articles")
+                ->executeQuery()
+                ->fetchAllAssociative();
+        } catch (Exception $e) {
+            throw new ArticleFetchFailedException("Failed to fetch articles - {$e->getMessage()}");
+        }
 
         $articles = [];
         foreach ($articlesData as $articleData) {
