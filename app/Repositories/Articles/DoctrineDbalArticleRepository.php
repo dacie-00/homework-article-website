@@ -156,15 +156,17 @@ class DoctrineDbalArticleRepository implements ArticleRepositoryInterface
     /**
      * @inheritDoc
      */
-    public function like(string $articleId)
+    public function like(string $articleId): void
     {
         try {
             $result = $this->connection->createQueryBuilder()
                 ->update("articles")
                 ->where("article_id = :article_id")
                 ->set("likes", "likes + 1")
+                ->set("updated_at", ":updated_at")
                 ->setParameters([
                     "article_id" => $articleId,
+                    "updated_at" => Carbon::now("UTC")->format(DateTimeInterface::ATOM),
                 ])
                 ->executeQuery()
                 ->rowCount();

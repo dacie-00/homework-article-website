@@ -32,11 +32,11 @@ interface CommentRepositoryInterface
     /**
      * @throws CommentDeletionFailedException
      */
-    public function delete(string $commentId);
+    public function delete(string $commentId): void;
 
     /**
      * @throws CommentUpdateFailedException
      * @throws CommentNotFoundException
      */
-    public function like(string $articleId);
+    public function like(string $commentId): void;
 }

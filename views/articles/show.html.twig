@@ -13,8 +13,7 @@
         <div class="w-1/2 max-w-4xl bg-gray-800 m-4 px-8 py-4 rounded-md">
             <h1 class="text-gray-300 text-center text-4xl py-2">{{ article.title }}</h1>
             <p class="text-gray-400 text-xl py-2 whitespace-break-spaces break-words">{{ article.content }}</p>
-            <p class="text-gray-500 pb-2">Created
-                                     on {{ article.createdAt|date }}{% if article.updatedAt != article.createdAt %}, updated on {{ article.updatedAt|date }} {% endif %}</p>
+            <p class="text-gray-500 pb-2">Created on {{ article.createdAt|date }}</p>
             <div class="w-full flex items-center">
                 <form action="{{ article.id }}/likes" method="post">
                     <button type="submit"

@@ -153,8 +153,10 @@ class DoctrineDbalCommentRepository implements CommentRepositoryInterface
                 ->update("comments")
                 ->where("comment_id = :comment_id")
                 ->set("likes", "likes + 1")
+                ->set("updated_at", ":updated_at")
                 ->setParameters([
                     "comment_id" => $commentId,
+                    "updated_at" => Carbon::now("UTC")->format(DateTimeInterface::ATOM),
                 ])
                 ->executeQuery()
                 ->rowCount();

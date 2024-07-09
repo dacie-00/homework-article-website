@@ -31,16 +31,16 @@ interface ArticleRepositoryInterface
     /**
      * @throws ArticleDeletionFailedException
      */
-    public function delete(string $articleId);
+    public function delete(string $articleId): void;
 
     /**
      * @throws ArticleUpdateFailedException
      */
-    public function update(Article $article);
+    public function update(Article $article): void;
 
     /**
      * @throws ArticleUpdateFailedException
      * @throws ArticleNotFoundException
      */
-    public function like(string $articleId);
+    public function like(string $articleId): void;
 }
