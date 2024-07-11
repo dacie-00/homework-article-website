@@ -4,44 +4,44 @@ declare(strict_types=1);
 namespace App\Repositories\Articles;
 
 use App\Models\Article;
-use App\Repositories\Articles\Exceptions\ArticleDeletionFailedException;
-use App\Repositories\Articles\Exceptions\ArticleFetchFailedException;
-use App\Repositories\Articles\Exceptions\ArticleInsertionFailedException;
-use App\Repositories\Articles\Exceptions\ArticleNotFoundException;
-use App\Repositories\Articles\Exceptions\ArticleUpdateFailedException;
+use App\Repositories\Exceptions\DeletionInRepositoryFailedException;
+use App\Repositories\Exceptions\InsertionInRepositoryFailedException;
+use App\Repositories\Exceptions\ItemInRepositoryNotFoundException;
+use App\Repositories\Exceptions\RetrievalInRepositoryFailedException;
+use App\Repositories\Exceptions\UpdateInRepositoryFailedException;
 
 interface ArticleRepositoryInterface
 {
     /**
-     * @throws ArticleInsertionFailedException
+     * @throws InsertionInRepositoryFailedException
      */
     public function insert(Article $article): void;
 
     /**
-     * @throws ArticleFetchFailedException
-     * @throws ArticleNotFoundException
+     * @throws RetrievalInRepositoryFailedException
+     * @throws ItemInRepositoryNotFoundException
      */
     public function get(string $articleId): Article;
 
     /**
-     * @throws ArticleFetchFailedException
+     * @throws RetrievalInRepositoryFailedException
      * @return Article[]
      */
     public function getAll(): array;
 
     /**
-     * @throws ArticleDeletionFailedException
+     * @throws DeletionInRepositoryFailedException
      */
     public function delete(string $articleId): void;
 
     /**
-     * @throws ArticleUpdateFailedException
+     * @throws UpdateInRepositoryFailedException
      */
     public function update(Article $article): void;
 
     /**
-     * @throws ArticleUpdateFailedException
-     * @throws ArticleNotFoundException
+     * @throws UpdateInRepositoryFailedException
+     * @throws ItemInRepositoryNotFoundException
      */
     public function like(string $articleId): void;
 }

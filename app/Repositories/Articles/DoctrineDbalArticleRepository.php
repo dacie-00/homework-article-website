@@ -4,11 +4,12 @@ declare(strict_types=1);
 namespace App\Repositories\Articles;
 
 use App\Models\Article;
-use App\Repositories\Articles\Exceptions\ArticleDeletionFailedException;
-use App\Repositories\Articles\Exceptions\ArticleFetchFailedException;
-use App\Repositories\Articles\Exceptions\ArticleInsertionFailedException;
-use App\Repositories\Articles\Exceptions\ArticleNotFoundException;
-use App\Repositories\Articles\Exceptions\ArticleUpdateFailedException;
+use App\Repositories\Exceptions\InsertionInRepositoryFailedException;
+use App\Repositories\Exceptions\ItemInRepositoryNotFoundException;
+use App\Repositories\Exceptions\RetrievalInRepositoryFailedException;
+use App\Repositories\Exceptions\UpdateInRepositoryFailedException;
+use App\Services\Articles\Exceptions\ArticleDeletionFailedException;
+use App\Services\Articles\Exceptions\ArticleNotFoundException;
 use Carbon\Carbon;
 use DateTimeInterface;
 use Doctrine\DBAL\Connection;
@@ -47,7 +48,11 @@ class DoctrineDbalArticleRepository implements ArticleRepositoryInterface
                 ])
                 ->executeQuery();
         } catch (Exception $e) {
-            throw new ArticleInsertionFailedException($e->getMessage());
+            throw new InsertionInRepositoryFailedException(
+                "Failed to insert article ({$article->id()})",
+                0,
+                $e
+            );
         }
     }
 
@@ -62,12 +67,16 @@ class DoctrineDbalArticleRepository implements ArticleRepositoryInterface
                 ->executeQuery()
                 ->fetchAssociative();
         } catch (Exception $e) {
-            throw new ArticleFetchFailedException($e->getMessage());
+            throw new RetrievalInRepositoryFailedException(
+                "Failed to retrieve article with id ($articleId)",
+                0,
+                $e
+            );
         }
 
         if ($articleData === false) {
-            throw new ArticleNotFoundException(
-                "Article with id $articleId not found"
+            throw new ItemInRepositoryNotFoundException(
+                "Failed to find article with id ($articleId)"
             );
         }
 
@@ -93,7 +102,11 @@ class DoctrineDbalArticleRepository implements ArticleRepositoryInterface
                 ->executeQuery()
                 ->fetchAllAssociative();
         } catch (Exception $e) {
-            throw new ArticleFetchFailedException("Failed to fetch articles - {$e->getMessage()}");
+            throw new RetrievalInRepositoryFailedException(
+                "Failed to retrieve articles",
+                0,
+                $e
+            );
         }
 
         $articles = [];
@@ -124,12 +137,14 @@ class DoctrineDbalArticleRepository implements ArticleRepositoryInterface
                 ->fetchOne();
         } catch (Exception $e) {
             throw new ArticleDeletionFailedException(
-                "Article $articleId deletion failed - {$e->getMessage()}"
+                "Failed to delete article with id ($articleId)",
+                0,
+                $e
             );
         }
         if ($result !== false) {
             throw new ArticleNotFoundException(
-                "Can't delete article $articleId as it does not exist"
+                "Failed to find article with id ($articleId)"
             );
         }
     }
@@ -151,8 +166,10 @@ class DoctrineDbalArticleRepository implements ArticleRepositoryInterface
                 ])
                 ->executeQuery();
         } catch (Exception $e) {
-            throw new ArticleUpdateFailedException(
-                "Article {$article->id()} update failed - {$e->getMessage()}"
+            throw new UpdateInRepositoryFailedException(
+                "Failed to update article with id ({$article->id()})",
+                0,
+                $e
             );
         }
     }
@@ -175,12 +192,16 @@ class DoctrineDbalArticleRepository implements ArticleRepositoryInterface
                 ->executeQuery()
                 ->rowCount();
         } catch (Exception $e) {
-            throw new ArticleUpdateFailedException(
-                "Article $articleId like increment failed - {$e->getMessage()}"
+            throw new UpdateInRepositoryFailedException(
+                "Failed to update article with id ({$articleId})",
+                0,
+                $e
             );
         }
         if ($result === 0) {
-            throw new ArticleNotFoundException("Article {$articleId} doesn't exist");
+            throw new ArticleNotFoundException(
+                "Failed to find article with id ($articleId)"
+            );
         }
     }
 }

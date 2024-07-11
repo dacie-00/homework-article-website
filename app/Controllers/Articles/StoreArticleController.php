@@ -6,9 +6,9 @@ namespace App\Controllers\Articles;
 use App\FlashMessage;
 use App\Message;
 use App\Models\Article;
-use App\Repositories\Articles\Exceptions\ArticleInsertionFailedException;
 use App\Responses\RedirectResponse;
 use App\Services\Articles\ArticleValidationService;
+use App\Services\Articles\Exceptions\ArticleStoringFailedException;
 use App\Services\Articles\Exceptions\InvalidArticleContentException;
 use App\Services\Articles\Exceptions\InvalidArticleTitleException;
 use App\Services\Articles\StoreArticleService;
@@ -37,7 +37,7 @@ class StoreArticleController
     {
         $title = $_POST["title"];
         $content = $_POST["content"];
-        try {
+        try { // TODO: refactor using validation package
             $this->articleValidationService->execute($title, $content);
         } catch (InvalidArticleTitleException|InvalidArticleContentException $e) {
             $this->flashMessage->set(new Message(
@@ -55,11 +55,11 @@ class StoreArticleController
 
         try {
             $this->storeArticleService->execute($article);
-        } catch (ArticleInsertionFailedException $e) {
-            $this->logger->error("Failed to create article '{$article->title()}' - {$e->getMessage()}");
+        } catch (ArticleStoringFailedException $e) {
+            $this->logger->error($e);
             $this->flashMessage->set(new Message(
                 Message::TYPE_ERROR,
-                "Internal Error - failed to create article '{$article->title()}'",
+                "Oops! Something went wrong!",
             ));
             return new RedirectResponse("/articles");
         }

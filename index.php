@@ -2,6 +2,7 @@
 declare(strict_types=1);
 session_start();
 
+use App\Exceptions\InfrastructureException;
 use App\Responses\RedirectResponse;
 use App\Responses\TemplateResponse;
 use App\Services\Database\InitializeDatabaseService;
@@ -75,8 +76,8 @@ switch ($routeInfo[0]) {
         $vars = $routeInfo[2];
         try {
             $response = $container->get($handle)(...array_values($vars));
-        } catch (Exception $e) {
-            $logger->error($e->getMessage());
+        } catch (DomainException|InfrastructureException $e) {
+            $logger->error($e);
         }
         if ($response instanceof TemplateResponse) {
             echo $twig->render($response->template() . ".html.twig", $response->data());

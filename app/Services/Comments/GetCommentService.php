@@ -5,8 +5,10 @@ namespace App\Services\Comments;
 
 use App\Models\Comment;
 use App\Repositories\Comments\CommentRepositoryInterface;
-use App\Repositories\Comments\Exceptions\CommentFetchFailedException;
-use App\Repositories\Comments\Exceptions\CommentNotFoundException;
+use App\Repositories\Exceptions\ItemInRepositoryNotFoundException;
+use App\Repositories\Exceptions\RetrievalInRepositoryFailedException;
+use App\Services\Comments\Exceptions\CommentRetrievalFailedException;
+use App\Services\Comments\Exceptions\CommentNotFoundException;
 
 class GetCommentService
 {
@@ -18,12 +20,20 @@ class GetCommentService
     }
 
     /**
-     * @throws CommentFetchFailedException
+     * @throws CommentRetrievalFailedException
      * @throws CommentNotFoundException
      */
-    public function execute(string $id): Comment
+    public function execute(string $commentId): Comment
     {
-        return $this->commentRepository->get($id);
+        try {
+            return $this->commentRepository->get($commentId);
+        } catch (ItemInRepositoryNotFoundException|RetrievalInRepositoryFailedException $e) {
+            throw new CommentRetrievalFailedException(
+                "Failed to retrieve comment with id ($commentId)",
+                0,
+                $e
+            );
+        }
     }
 
 }

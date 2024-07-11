@@ -4,8 +4,11 @@ declare(strict_types=1);
 namespace App\Services\Articles;
 
 use App\Repositories\Articles\ArticleRepositoryInterface;
-use App\Repositories\Articles\Exceptions\ArticleNotFoundException;
-use App\Repositories\Articles\Exceptions\ArticleUpdateFailedException;
+use App\Repositories\Exceptions\ItemInRepositoryNotFoundException;
+use App\Repositories\Exceptions\UpdateInRepositoryFailedException;
+use App\Services\Articles\Exceptions\ArticleNotFoundException;
+use App\Services\Articles\Exceptions\ArticleUpdateFailedException;
+use App\Services\Articles\Exceptions\ArticleLikeUpdateFailedException;
 
 class LikeArticleService
 {
@@ -18,10 +21,17 @@ class LikeArticleService
 
     /**
      * @throws ArticleUpdateFailedException
-     * @throws ArticleNotFoundException
      */
-    public function execute(string $articleId)
+    public function execute(string $articleId): void
     {
-        $this->articleRepository->like($articleId);
+        try {
+            $this->articleRepository->like($articleId);
+        } catch (ItemInRepositoryNotFoundException|UpdateInRepositoryFailedException $e) {
+            throw new ArticleUpdateFailedException(
+                "Failed to add like to article with id ($articleId)",
+                0,
+                $e
+            );
+        }
     }
 }

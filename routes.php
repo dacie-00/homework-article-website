@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-use App\Controllers\Articles\CreateArticleController;
+use App\Controllers\Articles\CreateFormArticleController;
 use App\Controllers\Articles\DestroyArticleController;
 use App\Controllers\Articles\EditArticleController;
 use App\Controllers\Articles\IndexArticleController;
@@ -26,7 +26,7 @@ return [
     ["PATCH", "/articles/{id}", UpdateArticleController::class],
     ["POST", "/articles/{id}/likes", LikeArticleController::class],
     ["GET", "/articles/{id}/edit", EditArticleController::class],
-    ["GET", "/articles/write", CreateArticleController::class],
+    ["GET", "/articles/write", CreateFormArticleController::class],
     ["GET", "/articles/{id}", ShowArticleController::class],
     ["POST", "/comments", StoreCommentController::class],
     ["DELETE", "/comments/{id}", DestroyCommentController::class],

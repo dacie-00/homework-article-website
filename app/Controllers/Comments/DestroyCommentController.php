@@ -5,11 +5,11 @@ namespace App\Controllers\Comments;
 
 use App\FlashMessage;
 use App\Message;
-use App\Repositories\Comments\Exceptions\CommentDeletionFailedException;
-use App\Repositories\Comments\Exceptions\CommentFetchFailedException;
-use App\Repositories\Comments\Exceptions\CommentNotFoundException;
 use App\Responses\RedirectResponse;
 use App\Services\Comments\DestroyCommentService;
+use App\Services\Comments\Exceptions\CommentDeletionFailedException;
+use App\Services\Comments\Exceptions\CommentRetrievalFailedException;
+use App\Services\Comments\Exceptions\CommentNotFoundException;
 use App\Services\Comments\GetCommentService;
 use Psr\Log\LoggerInterface;
 
@@ -36,30 +36,14 @@ class DestroyCommentController
     {
         try {
             $comment = $this->getCommentService->execute($commentId);
-        } catch (CommentNotFoundException $e) {
-            $this->logger->error("Attempt to delete comment that doesn't exist - {$e->getMessage()}");
+            $this->destroyCommentService->execute($commentId);
+        } catch (CommentNotFoundException|CommentRetrievalFailedException|CommentDeletionFailedException $e) {
+            $this->logger->error($e);
             $this->flashMessage->set(new Message(
                 Message::TYPE_ERROR,
-                "Failed to find and delete comment!",
-            ));
-            return new RedirectResponse("/articles");
-        } catch (CommentFetchFailedException $e) {
-            $this->logger->error("Failed to fetch comment - {$e->getMessage()}");
-            $this->flashMessage->set(new Message(
-                Message::TYPE_ERROR,
-                "Failed to delete comment!",
+                "Oops! Something went wrong!",
             ));
             return new RedirectResponse("/articles/");
-        }
-        try {
-            $this->destroyCommentService->execute($commentId);
-        } catch (CommentDeletionFailedException $e) {
-            $this->logger->error("Failed to delete comment - {$e->getMessage()}");
-            $this->flashMessage->set(new Message(
-                Message::TYPE_ERROR,
-                "Failed to delete comment!",
-            ));
-            return new RedirectResponse("/articles");
         }
 
         $this->flashMessage->set(new Message(

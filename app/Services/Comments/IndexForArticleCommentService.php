@@ -5,32 +5,34 @@ namespace App\Services\Comments;
 
 use App\Models\Comment;
 use App\Repositories\Comments\CommentRepositoryInterface;
-use App\Repositories\Comments\Exceptions\CommentFetchFailedException;
+use App\Repositories\Exceptions\RetrievalInRepositoryFailedException;
+use App\Services\Comments\Exceptions\CommentRetrievalFailedException;
 use Psr\Log\LoggerInterface;
 
 class IndexForArticleCommentService
 {
     private CommentRepositoryInterface $commentRepository;
-    private LoggerInterface $logger;
 
     public function __construct(
-        CommentRepositoryInterface $commentRepository,
-        LoggerInterface $logger
+        CommentRepositoryInterface $commentRepository
     ) {
         $this->commentRepository = $commentRepository;
-        $this->logger = $logger;
     }
 
     /**
      * @return Comment[]
+     * @throws CommentRetrievalFailedException
      */
     public function execute($articleId): array
     {
         try {
             $comments = $this->commentRepository->getForArticle($articleId);
-        } catch (CommentFetchFailedException $e) {
-            $this->logger->error($e->getMessage());
-            return [];
+        } catch (RetrievalInRepositoryFailedException $e) {
+            throw new CommentRetrievalFailedException(
+                "Failed to retrieve comments for article with id ($articleId)",
+                0,
+                $e
+            );
         }
         return $comments;
     }

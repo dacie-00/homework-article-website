@@ -4,8 +4,10 @@ declare(strict_types=1);
 namespace App\Services\Comments;
 
 use App\Repositories\Comments\CommentRepositoryInterface;
-use App\Repositories\Comments\Exceptions\CommentNotFoundException;
-use App\Repositories\Comments\Exceptions\CommentUpdateFailedException;
+use App\Repositories\Exceptions\ItemInRepositoryNotFoundException;
+use App\Repositories\Exceptions\UpdateInRepositoryFailedException;
+use App\Services\Comments\Exceptions\CommentNotFoundException;
+use App\Services\Comments\Exceptions\CommentUpdateFailedException;
 
 class LikeCommentService
 {
@@ -17,11 +19,18 @@ class LikeCommentService
     }
 
     /**
-     * @throws CommentNotFoundException
      * @throws CommentUpdateFailedException
      */
     public function execute(string $commentId): void
     {
-        $this->commentRepository->like($commentId);
+        try {
+            $this->commentRepository->like($commentId);
+        } catch (ItemInRepositoryNotFoundException|UpdateInRepositoryFailedException $e) {
+            throw new CommentUpdateFailedException(
+                "Failed to update like amount for comment with id ($commentId)",
+                0,
+                $e
+            );
+        }
     }
 }

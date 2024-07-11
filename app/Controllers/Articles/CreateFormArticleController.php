@@ -6,7 +6,7 @@ namespace App\Controllers\Articles;
 use App\FlashMessage;
 use App\Responses\TemplateResponse;
 
-class CreateArticleController
+class CreateFormArticleController
 {
     private FlashMessage $flashMessage;
 

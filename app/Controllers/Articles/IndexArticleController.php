@@ -4,8 +4,8 @@ declare(strict_types=1);
 namespace App\Controllers\Articles;
 
 use App\FlashMessage;
-use App\Repositories\Articles\Exceptions\ArticleFetchFailedException;
 use App\Responses\TemplateResponse;
+use App\Services\Articles\Exceptions\ArticleRetrievalFailedException;
 use App\Services\Articles\IndexArticleService;
 use Psr\Log\LoggerInterface;
 
@@ -29,8 +29,9 @@ class IndexArticleController
     {
         try {
             $articles = $this->indexArticleService->execute();
-        } catch (ArticleFetchFailedException $e) {
-            $this->logger->error($e->getMessage());
+        } catch (ArticleRetrievalFailedException $e) {
+            $this->logger->error($e);
+            $articles = null;
         }
         $flashMessage = $this->flashMessage->get();
 

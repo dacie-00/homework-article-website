@@ -4,11 +4,11 @@ declare(strict_types=1);
 namespace App\Repositories\Comments;
 
 use App\Models\Comment;
-use App\Repositories\Comments\Exceptions\CommentDeletionFailedException;
-use App\Repositories\Comments\Exceptions\CommentFetchFailedException;
-use App\Repositories\Comments\Exceptions\CommentInsertionFailedException;
-use App\Repositories\Comments\Exceptions\CommentNotFoundException;
-use App\Repositories\Comments\Exceptions\CommentUpdateFailedException;
+use App\Repositories\Exceptions\DeletionInRepositoryFailedException;
+use App\Repositories\Exceptions\InsertionInRepositoryFailedException;
+use App\Repositories\Exceptions\ItemInRepositoryNotFoundException;
+use App\Repositories\Exceptions\RetrievalInRepositoryFailedException;
+use App\Repositories\Exceptions\UpdateInRepositoryFailedException;
 use Carbon\Carbon;
 use DateTimeInterface;
 use Doctrine\DBAL\Connection;
@@ -49,7 +49,11 @@ class DoctrineDbalCommentRepository implements CommentRepositoryInterface
                 ])
                 ->executeQuery();
         } catch (Exception $e) {
-            throw new CommentInsertionFailedException($e->getMessage());
+            throw new InsertionInRepositoryFailedException(
+                "Failed to insert comment with id ({$comment->id()})",
+                0,
+                $e
+            );
         }
     }
 
@@ -67,12 +71,14 @@ class DoctrineDbalCommentRepository implements CommentRepositoryInterface
                 ->executeQuery()
                 ->fetchAssociative();
         } catch (Exception $e) {
-            throw new CommentFetchFailedException($e->getMessage());
+            throw new RetrievalInRepositoryFailedException(
+                "Failed to retrieve comment with id ($commentId)",
+            );
         }
 
         if ($commentData === false) {
-            throw new CommentNotFoundException(
-                "Comment with id $commentId not found"
+            throw new ItemInRepositoryNotFoundException(
+                "Failed to find comment with id ($commentId)"
             );
         }
 
@@ -101,7 +107,11 @@ class DoctrineDbalCommentRepository implements CommentRepositoryInterface
                 ->executeQuery()
                 ->fetchAllAssociative();
         } catch (Exception $e) {
-            throw new CommentFetchFailedException($e->getMessage());
+            throw new RetrievalInRepositoryFailedException(
+                "Failed to retrieve comments for article with id ($articleId)",
+                0,
+                $e
+            );
         }
 
         $comments = [];
@@ -132,13 +142,15 @@ class DoctrineDbalCommentRepository implements CommentRepositoryInterface
                 ->executeQuery()
                 ->fetchOne();
         } catch (Exception $e) {
-            throw new CommentDeletionFailedException(
-                "Comment $commentId deletion failed - {$e->getMessage()}"
+            throw new DeletionInRepositoryFailedException(
+                "Failed to delete comment with id ($commentId)",
+                0,
+                $e
             );
         }
         if ($result !== false) {
-            throw new CommentNotFoundException(
-                "Can't delete article $commentId as it does not exist"
+            throw new ItemInRepositoryNotFoundException(
+                "Failed to find comment with id ($commentId)"
             );
         }
     }
@@ -161,12 +173,16 @@ class DoctrineDbalCommentRepository implements CommentRepositoryInterface
                 ->executeQuery()
                 ->rowCount();
         } catch (Exception $e) {
-            throw new CommentUpdateFailedException(
-                "Comment $commentId like increment failed - {$e->getMessage()}"
+            throw new UpdateInRepositoryFailedException(
+                "Failed to updated comment with id ($commentId)",
+                0,
+                $e
             );
         }
         if ($result === 0) {
-            throw new CommentNotFoundException("Comment {$commentId} doesn't exist");
+            throw new ItemInRepositoryNotFoundException(
+                "Failed to find comment with id ($commentId)"
+            );
         }
     }
 }

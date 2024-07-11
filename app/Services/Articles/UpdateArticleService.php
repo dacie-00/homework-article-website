@@ -5,7 +5,8 @@ namespace App\Services\Articles;
 
 use App\Models\Article;
 use App\Repositories\Articles\ArticleRepositoryInterface;
-use App\Repositories\Articles\Exceptions\ArticleUpdateFailedException;
+use App\Repositories\Exceptions\UpdateInRepositoryFailedException;
+use App\Services\Articles\Exceptions\ArticleUpdateFailedException;
 use Carbon\Carbon;
 
 class UpdateArticleService
@@ -20,7 +21,7 @@ class UpdateArticleService
     /**
      * @throws ArticleUpdateFailedException
      */
-    public function execute(Article $article, array $data): void
+    public function execute(Article $article, array $data): void // TODO: make this less bad
     {
         if (isset($data["title"])) {
             $article->setTitle($data["title"]);
@@ -30,6 +31,14 @@ class UpdateArticleService
         }
         $article->setUpdatedAt(Carbon::now("UTC"));
 
-        $this->articleRepository->update($article);
+        try {
+            $this->articleRepository->update($article);
+        } catch (UpdateInRepositoryFailedException $e) {
+            throw new ArticleUpdateFailedException(
+                "Failed to update article with id ({$article->id()})",
+                0,
+                $e
+            );
+        }
     }
 }

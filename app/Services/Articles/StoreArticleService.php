@@ -5,7 +5,8 @@ namespace App\Services\Articles;
 
 use App\Models\Article;
 use App\Repositories\Articles\ArticleRepositoryInterface;
-use App\Repositories\Articles\Exceptions\ArticleInsertionFailedException;
+use App\Repositories\Exceptions\InsertionInRepositoryFailedException;
+use App\Services\Articles\Exceptions\ArticleStoringFailedException;
 
 class StoreArticleService
 {
@@ -17,10 +18,16 @@ class StoreArticleService
     }
 
     /**
-     * @throws ArticleInsertionFailedException
+     * @throws ArticleStoringFailedException
      */
     public function execute(Article $article): void
     {
-        $this->articleRepository->insert($article);
+        try {
+            $this->articleRepository->insert($article);
+        } catch (InsertionInRepositoryFailedException $e) {
+            throw new ArticleStoringFailedException(
+                "Failed to store article with id ({$article->id()})",
+            );
+        }
     }
 }

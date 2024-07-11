@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace App\Controllers\Articles;
 
-use App\Repositories\Articles\Exceptions\ArticleNotFoundException;
-use App\Repositories\Articles\Exceptions\ArticleUpdateFailedException;
 use App\Responses\RedirectResponse;
+use App\Services\Articles\Exceptions\ArticleNotFoundException;
+use App\Services\Articles\Exceptions\ArticleUpdateFailedException;
 use App\Services\Articles\LikeArticleService;
 use Psr\Log\LoggerInterface;
 
@@ -24,10 +24,9 @@ class LikeArticleController
     {
         try {
             $this->likeArticleService->execute($articleId);
-            return new RedirectResponse("/articles/{$articleId}");
-        } catch (ArticleNotFoundException|ArticleUpdateFailedException $e) {
+        } catch (ArticleUpdateFailedException $e) {
             $this->logger->error($e->getMessage());
-            return new RedirectResponse("/articles/{$articleId}");
         }
+        return new RedirectResponse("/articles/$articleId");
     }
 }

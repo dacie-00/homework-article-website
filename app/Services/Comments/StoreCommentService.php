@@ -6,7 +6,9 @@ namespace App\Services\Comments;
 
 use App\Models\Comment;
 use App\Repositories\Comments\CommentRepositoryInterface;
-use App\Repositories\Comments\Exceptions\CommentInsertionFailedException;
+use App\Repositories\Exceptions\InsertionInRepositoryFailedException;
+use App\Services\Comments\Exceptions\CommentInsertionFailedException;
+use App\Services\Comments\Exceptions\CommentStoringFailedException;
 
 class StoreCommentService
 {
@@ -18,10 +20,18 @@ class StoreCommentService
     }
 
     /**
-     * @throws CommentInsertionFailedException
+     * @throws CommentStoringFailedException
      */
     public function execute(Comment $comment): void
     {
-        $this->commentRepository->insert($comment);
+        try {
+            $this->commentRepository->insert($comment);
+        } catch (InsertionInRepositoryFailedException $e) {
+            throw new CommentStoringFailedException(
+                "Failed to store comment with id ({$comment->id()})",
+                0,
+                $e
+            );
+        }
     }
 }

@@ -6,9 +6,10 @@ namespace App\Controllers\Comments;
 use App\FlashMessage;
 use App\Message;
 use App\Models\Comment;
-use App\Repositories\Comments\Exceptions\CommentInsertionFailedException;
 use App\Responses\RedirectResponse;
 use App\Services\Comments\CommentValidationService;
+use App\Services\Comments\Exceptions\CommentInsertionFailedException;
+use App\Services\Comments\Exceptions\CommentStoringFailedException;
 use App\Services\Comments\Exceptions\InvalidCommentContentException;
 use App\Services\Comments\Exceptions\InvalidCommentUsernameException;
 use App\Services\Comments\StoreCommentService;
@@ -38,7 +39,7 @@ class StoreCommentController
         $user = $_POST["user"];
         $content = $_POST["content"];
         $articleId = $_POST["article-id"];
-        try {
+        try { // TODO: refactor with validation package
             $this->commentValidationService->execute($user, $content);
         } catch (InvalidCommentUsernameException|InvalidCommentContentException $e) {
             $this->flashMessage->set(new Message(
@@ -56,13 +57,12 @@ class StoreCommentController
 
         try {
             $this->storeCommentService->execute($comment);
-        } catch (CommentInsertionFailedException $e) {
-            $this->logger->error("Failed to create comment '{$comment->id()}' - {$e->getMessage()}");
+        } catch (CommentStoringFailedException $e) {
+            $this->logger->error($e);
             $this->flashMessage->set(new Message(
                 Message::TYPE_ERROR,
-                "Internal Error - failed to create comment '{$comment->id()}'",
+                "Oops! something went wrong!",
             ));
-            return new RedirectResponse("/articles/$articleId#comment-{$comment->id()}");
         }
         return new RedirectResponse("/articles/$articleId#comment-{$comment->id()}");
     }

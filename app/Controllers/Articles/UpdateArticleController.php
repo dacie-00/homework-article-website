@@ -5,11 +5,11 @@ namespace App\Controllers\Articles;
 
 use App\FlashMessage;
 use App\Message;
-use App\Repositories\Articles\Exceptions\ArticleFetchFailedException;
-use App\Repositories\Articles\Exceptions\ArticleNotFoundException;
-use App\Repositories\Articles\Exceptions\ArticleUpdateFailedException;
 use App\Responses\RedirectResponse;
 use App\Services\Articles\ArticleValidationService;
+use App\Services\Articles\Exceptions\ArticleRetrievalFailedException;
+use App\Services\Articles\Exceptions\ArticleNotFoundException;
+use App\Services\Articles\Exceptions\ArticleUpdateFailedException;
 use App\Services\Articles\Exceptions\InvalidArticleContentException;
 use App\Services\Articles\Exceptions\InvalidArticleTitleException;
 use App\Services\Articles\GetArticleService;
@@ -42,7 +42,7 @@ class UpdateArticleController
     {
         $title = $_POST["title"];
         $content = $_POST["content"];
-        try {
+        try { // TODO: refactor with validation package
             $this->articleValidationService->execute($title, $content);
         } catch (InvalidArticleTitleException|InvalidArticleContentException $e) {
             $this->flashMessage->set(new Message(
@@ -58,33 +58,17 @@ class UpdateArticleController
         }
         try {
             $article = $this->getArticleService->execute($id);
-        } catch (ArticleNotFoundException $e) {
-            $this->logger->error("Attempt to update article '$title' that doesn't exist - {$e->getMessage()}");
-            $this->flashMessage->set(new Message(
-                Message::TYPE_ERROR,
-                "The article you are trying to update does not exist",
-            ));
-            return new RedirectResponse("/404");
-        } catch (ArticleFetchFailedException $e) {
-            $this->logger->error("Attempt to fetch article '$title' failed - {$e->getMessage()}");
-            $this->flashMessage->set(new Message(
-                Message::TYPE_ERROR,
-                "failed to fetch article '$title'",
-            ));
-            return new RedirectResponse("/500");
-        }
-        try {
             $this->updateArticleService->execute(
                 $article, [
                     "title" => $title,
                     "content" => $content,
                 ]
             );
-        } catch (ArticleUpdateFailedException $e) {
-            $this->logger->error("Failed to update article '{$article->title()}' - {$e->getMessage()}");
+        } catch (ArticleRetrievalFailedException|ArticleUpdateFailedException $e) {
+            $this->logger->error($e);
             $this->flashMessage->set(new Message(
                 Message::TYPE_ERROR,
-                "Internal Error - failed to update article '{$article->title()}'",
+                "Oops! Something went wrong!",
             ));
             return new RedirectResponse("/articles");
         }

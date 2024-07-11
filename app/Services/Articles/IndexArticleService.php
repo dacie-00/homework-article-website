@@ -5,7 +5,8 @@ namespace App\Services\Articles;
 
 use App\Models\Article;
 use App\Repositories\Articles\ArticleRepositoryInterface;
-use App\Repositories\Articles\Exceptions\ArticleFetchFailedException;
+use App\Repositories\Exceptions\RetrievalInRepositoryFailedException;
+use App\Services\Articles\Exceptions\ArticleRetrievalFailedException;
 
 class IndexArticleService
 {
@@ -19,10 +20,18 @@ class IndexArticleService
 
     /**
      * @return Article[]
-     * @throws ArticleFetchFailedException
+     * @throws ArticleRetrievalFailedException
      */
     public function execute(): array
     {
-        return $this->articleRepository->getAll();
+        try {
+            return $this->articleRepository->getAll();
+        } catch (RetrievalInRepositoryFailedException $e) {
+            throw new ArticleRetrievalFailedException(
+                "Failed to retrieve articles",
+                0,
+                $e
+            );
+        }
     }
 }
