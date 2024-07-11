@@ -57,7 +57,7 @@
                                 <span class="text-gray-400">{{ comment.likes }}</span>
                             </form>
                         </div>
-                        <form class="place-self-end mt-4" action="/comments/{{ comment.id }}" method="post">
+                        <form class="place-self-end mt-4" action="/articles/{{ article.id }}/comments/{{ comment.id }}" method="post">
                             <input class="focus:ring-4 focus:outline-none border border-red-700 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 border-red-500 text-red-500 hover:text-white hover:bg-red-500 focus:ring-red-800"
                                    type="submit" value="Delete comment">
                             <input type="hidden" name="_method" value="delete">
@@ -69,7 +69,7 @@
             {% endif %}
             <div class="bg-gray-700 rounded-md m-4 p-8">
                 <h2 class="text-gray-300 text-xl">Add new comment</h2>
-                <form id="comment-form" action="/comments" method="post" class="flex flex-col my-4 text-gray-400">
+                <form id="comment-form" action="/articles/{{ article.id }}/comments" method="post" class="flex flex-col my-4 text-gray-400">
                     {% if flashMessage %}
                         <p class="text-{{ flashMessage.type == "error" ? "red" : "gray" }}-400 text-2xl py-2">
                             {{ flashMessage.message }}

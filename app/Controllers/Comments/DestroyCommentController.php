@@ -32,12 +32,11 @@ class DestroyCommentController
         $this->logger = $logger;
     }
 
-    public function __invoke(string $commentId): RedirectResponse
+    public function __invoke(string $articleId, string $commentId): RedirectResponse
     {
         try {
-            $comment = $this->getCommentService->execute($commentId);
             $this->destroyCommentService->execute($commentId);
-        } catch (CommentNotFoundException|CommentRetrievalFailedException|CommentDeletionFailedException $e) {
+        } catch (CommentDeletionFailedException $e) {
             $this->logger->error($e);
             $this->flashMessage->set(new Message(
                 Message::TYPE_ERROR,
@@ -51,7 +50,7 @@ class DestroyCommentController
             "Comment has been successfully deleted!",
         ));
 
-        return new RedirectResponse("/articles/{$comment->articleId()}");
+        return new RedirectResponse("/articles/$articleId");
     }
 
 }

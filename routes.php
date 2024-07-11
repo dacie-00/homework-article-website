@@ -28,7 +28,7 @@ return [
     ["GET", "/articles/{id}/edit", EditArticleController::class],
     ["GET", "/articles/write", CreateFormArticleController::class],
     ["GET", "/articles/{id}", ShowArticleController::class],
-    ["POST", "/comments", StoreCommentController::class],
-    ["DELETE", "/comments/{id}", DestroyCommentController::class],
+    ["POST", "/articles/{id}/comments", StoreCommentController::class],
+    ["DELETE", "/articles/{articleId}/comments/{commentId}", DestroyCommentController::class],
     ["POST", "/comments/{id}/likes", LikeCommentController::class],
 ];
