@@ -5,22 +5,26 @@ namespace App\Services\Comments;
 
 use App\Services\Comments\Exceptions\InvalidCommentContentException;
 use App\Services\Comments\Exceptions\InvalidCommentUsernameException;
+use Respect\Validation\Exceptions\NestedValidationException;
+use Respect\Validation\Validator;
 
 class CommentValidationService
 {
     public function execute(string $title, string $content): void
     {
-        if (strlen($title) < 5) {
-            throw new InvalidCommentUsernameException("Username must be at least 5 characters long");
+        try {
+            Validator::length(5, 20)->setName("Username")->assert($title);
+        } catch (NestedValidationException $e) {
+            throw new InvalidCommentUsernameException(
+                implode("\n", $e->getMessages()),
+            );
         }
-        if (strlen($title) > 20) {
-            throw new InvalidCommentUsernameException("Username must be less than 100 characters long");
-        }
-        if (strlen($content) < 5) {
-            throw new InvalidCommentContentException("Comment content must be at least 5 characters long");
-        }
-        if (strlen($content) > 500) {
-            throw new InvalidCommentContentException("Comment content must be less than 500 characters long");
+        try {
+            Validator::length(5, 500)->setName("Content")->assert($content);
+        } catch (NestedValidationException $e) {
+            throw new InvalidCommentContentException(
+                implode("\n", $e->getMessages()),
+            );
         }
     }
 

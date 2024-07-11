@@ -5,23 +5,25 @@ namespace App\Services\Articles;
 
 use App\Services\Articles\Exceptions\InvalidArticleContentException;
 use App\Services\Articles\Exceptions\InvalidArticleTitleException;
+use Respect\Validation\Exceptions\NestedValidationException;
+use Respect\Validation\Validator;
 
 class ArticleValidationService
 {
     public function execute(string $title, string $content): void
     {
-        if (strlen($title) < 5) {
-            throw new InvalidArticleTitleException("Title must be at least 5 characters long");
+        try {
+            Validator::length(5, 100)->setName("Title")->assert($title);
+        } catch (NestedValidationException $e) {
+            throw new InvalidArticleTitleException(
+                implode("\n", $e->getMessages()),
+            );
         }
-        if (strlen($title) > 100) {
-            throw new InvalidArticleTitleException("Title must be less than 100 characters long");
-        }
-        if (strlen($content) < 20) {
-            throw new InvalidArticleContentException("Content must be at least 20 characters long");
-        }
-        if (strlen($content) > 2000) {
-            throw new InvalidArticleContentException("Content must be less than 2000 characters long");
-        }
+        try {
+            Validator::length(5, 2000)->setName("Content")->assert($content);
+        } catch (NestedValidationException $e) {
+            throw new InvalidArticleTitleException(
+                implode("\n", $e->getMessages()),
+            );
     }
-
 }

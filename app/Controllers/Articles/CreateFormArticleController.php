@@ -19,6 +19,6 @@ class CreateFormArticleController
     public function __invoke(): TemplateResponse
     {
         $flashMessage = $this->flashMessage->get();
-        return new TemplateResponse("articles/create", ["flashMessage" => $flashMessage]);
+        return new TemplateResponse("articles/create-form", ["flashMessage" => $flashMessage]);
     }
 }
