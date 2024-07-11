@@ -24,8 +24,8 @@ interface ArticleRepositoryInterface
     public function get(string $articleId): Article;
 
     /**
-     * @throws RetrievalInRepositoryFailedException
      * @return Article[]
+     * @throws RetrievalInRepositoryFailedException
      */
     public function getAll(): array;
 

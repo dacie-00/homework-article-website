@@ -7,7 +7,6 @@ namespace App\Services\Comments;
 use App\Models\Comment;
 use App\Repositories\Comments\CommentRepositoryInterface;
 use App\Repositories\Exceptions\InsertionInRepositoryFailedException;
-use App\Services\Comments\Exceptions\CommentInsertionFailedException;
 use App\Services\Comments\Exceptions\CommentStoringFailedException;
 
 class StoreCommentService

@@ -6,7 +6,6 @@ namespace App\Controllers\Articles;
 use App\FlashMessage;
 use App\Responses\TemplateResponse;
 use App\Services\Articles\Exceptions\ArticleRetrievalFailedException;
-use App\Services\Articles\Exceptions\ArticleNotFoundException;
 use App\Services\Articles\ShowArticleService;
 use App\Services\Comments\Exceptions\CommentRetrievalFailedException;
 use App\Services\Comments\IndexForArticleCommentService;

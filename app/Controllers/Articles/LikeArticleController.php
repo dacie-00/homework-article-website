@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Controllers\Articles;
 
 use App\Responses\RedirectResponse;
-use App\Services\Articles\Exceptions\ArticleNotFoundException;
 use App\Services\Articles\Exceptions\ArticleUpdateFailedException;
 use App\Services\Articles\LikeArticleService;
 use Psr\Log\LoggerInterface;

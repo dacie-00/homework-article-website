@@ -8,7 +8,6 @@ use App\Repositories\Articles\ArticleRepositoryInterface;
 use App\Repositories\Exceptions\ItemInRepositoryNotFoundException;
 use App\Repositories\Exceptions\RetrievalInRepositoryFailedException;
 use App\Services\Articles\Exceptions\ArticleRetrievalFailedException;
-use App\Services\Articles\Exceptions\ArticleNotFoundException;
 
 class GetArticleService
 {

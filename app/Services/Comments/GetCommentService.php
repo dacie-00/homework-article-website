@@ -7,8 +7,8 @@ use App\Models\Comment;
 use App\Repositories\Comments\CommentRepositoryInterface;
 use App\Repositories\Exceptions\ItemInRepositoryNotFoundException;
 use App\Repositories\Exceptions\RetrievalInRepositoryFailedException;
-use App\Services\Comments\Exceptions\CommentRetrievalFailedException;
 use App\Services\Comments\Exceptions\CommentNotFoundException;
+use App\Services\Comments\Exceptions\CommentRetrievalFailedException;
 
 class GetCommentService
 {

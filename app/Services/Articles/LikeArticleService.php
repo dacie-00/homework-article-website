@@ -6,9 +6,8 @@ namespace App\Services\Articles;
 use App\Repositories\Articles\ArticleRepositoryInterface;
 use App\Repositories\Exceptions\ItemInRepositoryNotFoundException;
 use App\Repositories\Exceptions\UpdateInRepositoryFailedException;
-use App\Services\Articles\Exceptions\ArticleNotFoundException;
-use App\Services\Articles\Exceptions\ArticleUpdateFailedException;
 use App\Services\Articles\Exceptions\ArticleLikeUpdateFailedException;
+use App\Services\Articles\Exceptions\ArticleUpdateFailedException;
 
 class LikeArticleService
 {

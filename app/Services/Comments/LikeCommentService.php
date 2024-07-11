@@ -6,7 +6,6 @@ namespace App\Services\Comments;
 use App\Repositories\Comments\CommentRepositoryInterface;
 use App\Repositories\Exceptions\ItemInRepositoryNotFoundException;
 use App\Repositories\Exceptions\UpdateInRepositoryFailedException;
-use App\Services\Comments\Exceptions\CommentNotFoundException;
 use App\Services\Comments\Exceptions\CommentUpdateFailedException;
 
 class LikeCommentService

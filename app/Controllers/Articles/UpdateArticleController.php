@@ -8,7 +8,6 @@ use App\Message;
 use App\Responses\RedirectResponse;
 use App\Services\Articles\ArticleValidationService;
 use App\Services\Articles\Exceptions\ArticleRetrievalFailedException;
-use App\Services\Articles\Exceptions\ArticleNotFoundException;
 use App\Services\Articles\Exceptions\ArticleUpdateFailedException;
 use App\Services\Articles\Exceptions\InvalidArticleContentException;
 use App\Services\Articles\Exceptions\InvalidArticleTitleException;

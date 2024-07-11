@@ -7,7 +7,6 @@ use App\Models\Comment;
 use App\Repositories\Comments\CommentRepositoryInterface;
 use App\Repositories\Exceptions\RetrievalInRepositoryFailedException;
 use App\Services\Comments\Exceptions\CommentRetrievalFailedException;
-use Psr\Log\LoggerInterface;
 
 class IndexForArticleCommentService
 {

@@ -6,9 +6,7 @@ namespace App\Controllers\Articles;
 use App\FlashMessage;
 use App\Responses\TemplateResponse;
 use App\Services\Articles\Exceptions\ArticleRetrievalFailedException;
-use App\Services\Articles\Exceptions\ArticleNotFoundException;
 use App\Services\Articles\GetArticleService;
-use Psr\Log\LoggerInterface;
 
 class EditArticleController
 {
@@ -33,7 +31,7 @@ class EditArticleController
         $flashMessage = $this->flashMessage->get();
         return new TemplateResponse("articles/edit", [
             "article" => $article,
-            "flashMessage" => $flashMessage
+            "flashMessage" => $flashMessage,
         ]);
     }
 }

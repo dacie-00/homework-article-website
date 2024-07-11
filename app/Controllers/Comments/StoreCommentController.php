@@ -8,7 +8,6 @@ use App\Message;
 use App\Models\Comment;
 use App\Responses\RedirectResponse;
 use App\Services\Comments\CommentValidationService;
-use App\Services\Comments\Exceptions\CommentInsertionFailedException;
 use App\Services\Comments\Exceptions\CommentStoringFailedException;
 use App\Services\Comments\Exceptions\InvalidCommentContentException;
 use App\Services\Comments\Exceptions\InvalidCommentUsernameException;

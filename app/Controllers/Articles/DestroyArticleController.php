@@ -9,9 +9,7 @@ use App\Responses\RedirectResponse;
 use App\Services\Articles\DestroyArticleService;
 use App\Services\Articles\Exceptions\ArticleDeletionFailedException;
 use App\Services\Articles\Exceptions\ArticleRetrievalFailedException;
-use App\Services\Articles\Exceptions\ArticleNotFoundException;
 use App\Services\Articles\GetArticleService;
-use Psr\Log\LoggerInterface;
 
 class DestroyArticleController
 {
