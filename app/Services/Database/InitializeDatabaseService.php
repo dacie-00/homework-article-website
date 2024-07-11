@@ -55,6 +55,15 @@ class InitializeDatabaseService
                 $table->addColumn("updated_at", "string");
                 $this->schemaManager->createTable($table);
             }
+            if (!$this->schemaManager->tablesExist(["likes"])) {
+                $table = new Table("likes");
+                $table->addColumn("like_id", "string");
+                $table->setPrimaryKey(["like_id"]);
+                $table->addColumn("target_type", "string");
+                $table->addColumn("target_id", "string");
+                $table->addColumn("created_at", "string");
+                $this->schemaManager->createTable($table);
+            }
         } catch (SchemaException $e) {
         } catch (Exception $e) {
             throw new DatabaseInitializationFailedException("Failed to initialize database - $e");

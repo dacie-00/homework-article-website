@@ -68,4 +68,9 @@ class Comment
     {
         return $this->updatedAt;
     }
+
+    public function setLikes(int $likes): void
+    {
+        $this->likes = $likes;
+    }
 }

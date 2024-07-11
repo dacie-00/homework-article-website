@@ -75,4 +75,9 @@ class Article
     {
         $this->updatedAt = $updatedAt;
     }
+
+    public function setLikes(int $likes): void
+    {
+        $this->likes = $likes;
+    }
 }

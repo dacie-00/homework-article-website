@@ -7,6 +7,7 @@ use App\Responses\RedirectResponse;
 use App\Responses\TemplateResponse;
 use App\Services\Database\InitializeDatabaseService;
 use DI\ContainerBuilder;
+use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Twig\Environment;
@@ -20,7 +21,16 @@ $twig = new Environment($loader);
 $twig->getExtension(CoreExtension::class)->setTimezone("Europe/Riga");
 
 $logger = new Logger("app");
-$logger->pushHandler(new StreamHandler("storage/app.log"));
+$formatter = new LineFormatter(
+    null,
+    null,
+    true,
+    true,
+    true
+);
+$streamHandler = new StreamHandler("storage/app.log");
+$streamHandler->setFormatter($formatter);
+$logger->pushHandler($streamHandler);
 
 $connectionParameters = [
     "driver" => "pdo_sqlite",

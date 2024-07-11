@@ -5,6 +5,8 @@ use App\Repositories\Articles\ArticleRepositoryInterface;
 use App\Repositories\Articles\DoctrineDbalArticleRepository;
 use App\Repositories\Comments\CommentRepositoryInterface;
 use App\Repositories\Comments\DoctrineDbalCommentRepository;
+use App\Repositories\Likes\DoctrineDbalLikeRepository;
+use App\Repositories\Likes\LikeRepositoryInterface;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
 use Monolog\Logger;
@@ -22,4 +24,6 @@ return [
         create(DoctrineDbalArticleRepository::class)->constructor(get(Connection::class)),
     CommentRepositoryInterface::class =>
         create(DoctrineDbalCommentRepository::class)->constructor(get(Connection::class)),
+    LikeRepositoryInterface::class =>
+        create(DoctrineDbalLikeRepository::class)->constructor(get(Connection::class)),
 ];

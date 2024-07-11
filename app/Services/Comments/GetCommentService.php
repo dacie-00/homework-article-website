@@ -21,7 +21,6 @@ class GetCommentService
 
     /**
      * @throws CommentRetrievalFailedException
-     * @throws CommentNotFoundException
      */
     public function execute(string $commentId): Comment
     {
