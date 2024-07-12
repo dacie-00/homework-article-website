@@ -56,7 +56,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
     }
 });
 
-$httpMethod = $_POST["_method"] ?? $_SERVER['REQUEST_METHOD'];
+$httpMethod = $_POST["_method"] ? strtoupper($_POST["_method"]) : $_SERVER['REQUEST_METHOD'];
 
 $uri = $_SERVER['REQUEST_URI'];
 
