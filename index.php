@@ -7,6 +7,7 @@ use App\DatabaseInitializer;
 use App\Responses\RedirectResponse;
 use App\Responses\TemplateResponse;
 use DI\ContainerBuilder;
+use Doctrine\DBAL\Connection;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
@@ -74,8 +75,12 @@ switch ($routeInfo[0]) {
         $handle = $routeInfo[1];
         $vars = $routeInfo[2];
         try {
+            $connection = $container->get(Connection::class);
+            $connection->beginTransaction(); // TODO: check if there's a better way to do this or if this is okay
             $response = $container->get($handle)(...array_values($vars));
-        } catch (DomainException|InfrastructureException $e) {
+            $connection->commit();
+        } catch (DomainException|InfrastructureException|\Doctrine\DBAL\Exception $e) {
+            $connection->rollBack();
             $logger->error($e);
         }
         if ($response instanceof TemplateResponse) {
