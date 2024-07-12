@@ -56,19 +56,8 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
     }
 });
 
-$httpMethod = $_SERVER['REQUEST_METHOD'];
-if ($httpMethod === "POST" && isset($_POST["_method"])) {
-    switch (strtoupper($_POST["_method"])) {
-        case "DELETE":
-            $httpMethod = "DELETE";
-            break;
-        case "PATCH":
-            $httpMethod = "PATCH";
-            break;
-        default:
-            $httpMethod = "GET";
-    }
-}
+$httpMethod = $_POST["_method"] ?? $_SERVER['REQUEST_METHOD'];
+
 $uri = $_SERVER['REQUEST_URI'];
 
 if (false !== $pos = strpos($uri, '?')) {
