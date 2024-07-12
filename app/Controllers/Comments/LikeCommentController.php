@@ -37,7 +37,7 @@ class LikeCommentController
     {
         try {
             $comment = $this->getCommentService->execute($commentId);
-        } catch (CommentNotFoundException|CommentRetrievalFailedException $e) {
+        } catch (CommentRetrievalFailedException $e) {
             $this->logger->error($e);
             $this->flashMessage->set(new Message(
                 Message::TYPE_ERROR,

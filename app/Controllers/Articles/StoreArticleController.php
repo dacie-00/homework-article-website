@@ -37,16 +37,12 @@ class StoreArticleController
     {
         $title = $_POST["title"];
         $content = $_POST["content"];
-        try { // TODO: refactor using validation package
+        try {
             $this->articleValidationService->execute($title, $content);
         } catch (InvalidArticleTitleException|InvalidArticleContentException $e) {
             $this->flashMessage->set(new Message(
                 Message::TYPE_ERROR,
-                $e->getMessage(),
-                [
-                    "title" => "$title",
-                    "content" => "$content",
-                ]
+                $e->getMessage()
             ));
             return new RedirectResponse("/articles/write");
         }

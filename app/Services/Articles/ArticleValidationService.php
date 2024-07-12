@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Services\Articles;
 
+use App\Services\Articles\Exceptions\InvalidArticleContentException;
 use App\Services\Articles\Exceptions\InvalidArticleTitleException;
 use Respect\Validation\Exceptions\NestedValidationException;
 use Respect\Validation\Validator;
@@ -21,7 +22,7 @@ class ArticleValidationService
         try {
             Validator::length(5, 2000)->setName("Content")->assert($content);
         } catch (NestedValidationException $e) {
-            throw new InvalidArticleTitleException(
+            throw new InvalidArticleContentException(
                 implode("\n", $e->getMessages()),
             );
         }

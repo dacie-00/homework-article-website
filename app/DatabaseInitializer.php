@@ -15,7 +15,7 @@ class DatabaseInitializer
     private AbstractSchemaManager $schemaManager;
 
     public function __construct(
-        Connection $connection,
+        Connection $connection
     ) {
         try {
             $this->schemaManager = $connection->createSchemaManager();

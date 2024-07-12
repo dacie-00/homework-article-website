@@ -38,16 +38,12 @@ class StoreCommentController
         $user = $_POST["user"];
         $content = $_POST["content"];
         $articleId = $_POST["article-id"];
-        try { // TODO: refactor with validation package
+        try {
             $this->commentValidationService->execute($user, $content);
         } catch (InvalidCommentUsernameException|InvalidCommentContentException $e) {
             $this->flashMessage->set(new Message(
                 Message::TYPE_ERROR,
-                $e->getMessage(),
-                [
-                    "username" => "$user",
-                    "content" => "$content",
-                ]
+                $e->getMessage()
             ));
             return new RedirectResponse("/articles/$articleId#comment-form");
         }

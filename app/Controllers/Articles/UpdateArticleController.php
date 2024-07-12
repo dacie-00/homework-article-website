@@ -41,17 +41,12 @@ class UpdateArticleController
     {
         $title = $_POST["title"];
         $content = $_POST["content"];
-        try { // TODO: refactor with validation package
+        try {
             $this->articleValidationService->execute($title, $content);
         } catch (InvalidArticleTitleException|InvalidArticleContentException $e) {
             $this->flashMessage->set(new Message(
                 Message::TYPE_ERROR,
-                $e->getMessage(),
-                [
-                    "issue" => $e instanceof InvalidArticleTitleException ? "title" : "content",
-                    "title" => "$title",
-                    "content" => "$content",
-                ]
+                $e->getMessage()
             ));
             return new RedirectResponse("/articles/$id/edit");
         }

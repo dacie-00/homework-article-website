@@ -10,7 +10,7 @@ use App\Repositories\Likes\LikeRepositoryInterface;
 use App\Services\Comments\Exceptions\CommentRetrievalFailedException;
 use Psr\Log\LoggerInterface;
 
-class IndexForArticleCommentService
+class ArticleCommentService
 {
     private CommentRepositoryInterface $commentRepository;
     private LikeRepositoryInterface $likeRepository;

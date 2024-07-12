@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Repositories\Likes;
 
 use App\Models\Like;
+use App\Repositories\Exceptions\DeletionInRepositoryFailedException;
 use App\Repositories\Exceptions\InsertionInRepositoryFailedException;
 use App\Repositories\Exceptions\RetrievalInRepositoryFailedException;
 use Carbon\Carbon;
@@ -109,6 +110,26 @@ class DoctrineDbalLikeRepository implements LikeRepositoryInterface
         } catch (Exception $e) {
             throw new RetrievalInRepositoryFailedException(
                 "Failed to count likes for target class ($targetClass) with id ($targetId)",
+                0,
+                $e
+            );
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function deleteForItem(string $itemId): void
+    {
+        try {
+            $this->connection->createQueryBuilder()
+                ->delete("likes")
+                ->where("target_id = :target_id")
+                ->setParameter("target_id", $itemId)
+                ->executeQuery();
+        } catch (Exception $e) {
+            throw new DeletionInRepositoryFailedException(
+                "Failed to delete likes for target id ($itemId)",
                 0,
                 $e
             );
