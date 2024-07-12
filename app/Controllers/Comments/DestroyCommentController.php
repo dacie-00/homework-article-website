@@ -13,18 +13,15 @@ use Psr\Log\LoggerInterface;
 
 class DestroyCommentController
 {
-    private GetCommentService $getCommentService;
     private DestroyCommentService $destroyCommentService;
     private FlashMessage $flashMessage;
     private LoggerInterface $logger;
 
     public function __construct(
-        GetCommentService $getCommentService,
         DestroyCommentService $destroyCommentService,
         FlashMessage $flashMessage,
         LoggerInterface $logger
     ) {
-        $this->getCommentService = $getCommentService;
         $this->destroyCommentService = $destroyCommentService;
         $this->flashMessage = $flashMessage;
         $this->logger = $logger;

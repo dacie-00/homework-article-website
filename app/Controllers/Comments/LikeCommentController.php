@@ -10,7 +10,6 @@ use App\Responses\RedirectResponse;
 use App\Services\Comments\Exceptions\CommentNotFoundException;
 use App\Services\Comments\Exceptions\CommentRetrievalFailedException;
 use App\Services\Comments\GetCommentService;
-use App\Services\Comments\LikeCommentService;
 use App\Services\Likes\Exceptions\ItemLikeFailedException;
 use App\Services\Likes\LikeItemService;
 use Psr\Log\LoggerInterface;

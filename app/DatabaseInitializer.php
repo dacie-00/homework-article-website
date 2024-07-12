@@ -13,18 +13,15 @@ use Psr\Log\LoggerInterface;
 class DatabaseInitializer
 {
     private AbstractSchemaManager $schemaManager;
-    private LoggerInterface $logger;
 
     public function __construct(
         Connection $connection,
-        LoggerInterface $logger
     ) {
         try {
             $this->schemaManager = $connection->createSchemaManager();
         } catch (Exception $e) {
             throw new DatabaseInitializationFailedException("Failed to initialize database - $e");
         }
-        $this->logger = $logger;
     }
 
     public function execute(): void
