@@ -1,9 +1,8 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Services\Database;
+namespace App;
 
-use App\Services\Database\Exceptions\DatabaseInitializationFailedException;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception;
 use Doctrine\DBAL\Schema\AbstractSchemaManager;
@@ -11,7 +10,7 @@ use Doctrine\DBAL\Schema\SchemaException;
 use Doctrine\DBAL\Schema\Table;
 use Psr\Log\LoggerInterface;
 
-class InitializeDatabaseService
+class DatabaseInitializer
 {
     private AbstractSchemaManager $schemaManager;
     private LoggerInterface $logger;
@@ -64,8 +63,7 @@ class InitializeDatabaseService
                 $table->addColumn("created_at", "string");
                 $this->schemaManager->createTable($table);
             }
-        } catch (SchemaException $e) {
-        } catch (Exception $e) {
+        } catch (Exception|SchemaException $e) {
             throw new DatabaseInitializationFailedException("Failed to initialize database - $e");
         }
     }

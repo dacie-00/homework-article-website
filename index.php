@@ -3,9 +3,9 @@ declare(strict_types=1);
 session_start();
 
 use App\Exceptions\InfrastructureException;
+use App\DatabaseInitializer;
 use App\Responses\RedirectResponse;
 use App\Responses\TemplateResponse;
-use App\Services\Database\InitializeDatabaseService;
 use DI\ContainerBuilder;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
@@ -47,7 +47,7 @@ try {
     $logger->error($e->getMessage());
 }
 
-($container->get(InitializeDatabaseService::class))->execute();
+($container->get(DatabaseInitializer::class))->execute();
 
 $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
     $routes = include __DIR__ . "/routes.php";
