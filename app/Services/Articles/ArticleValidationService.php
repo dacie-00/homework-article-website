@@ -25,5 +25,6 @@ class ArticleValidationService
             throw new InvalidArticleTitleException(
                 implode("\n", $e->getMessages()),
             );
+        }
     }
 }
