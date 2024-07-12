@@ -5,7 +5,6 @@ namespace App\Controllers\Articles;
 
 use App\Models\Article;
 use App\Responses\RedirectResponse;
-use App\Services\Articles\Exceptions\ArticleUpdateFailedException;
 use App\Services\Articles\LikeArticleService;
 use App\Services\Likes\Exceptions\ItemLikeFailedException;
 use App\Services\Likes\LikeItemService;

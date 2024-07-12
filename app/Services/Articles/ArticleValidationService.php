@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace App\Services\Articles;
 
-use App\Services\Articles\Exceptions\InvalidArticleContentException;
 use App\Services\Articles\Exceptions\InvalidArticleTitleException;
 use Respect\Validation\Exceptions\NestedValidationException;
 use Respect\Validation\Validator;

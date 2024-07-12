@@ -41,7 +41,7 @@ class IndexForArticleCommentService
                 $e
             );
         }
-        foreach($comments as $comment) {
+        foreach ($comments as $comment) {
             try {
                 $likes = $this->likeRepository->getCount(Comment::class, $comment->id());
             } catch (RetrievalInRepositoryFailedException $e) {

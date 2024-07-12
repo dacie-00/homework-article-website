@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Repositories\Likes;
 
 use App\Models\Like;
-use App\Repositories\Exceptions\DeletionInRepositoryFailedException;
 use App\Repositories\Exceptions\InsertionInRepositoryFailedException;
 use App\Repositories\Exceptions\RetrievalInRepositoryFailedException;
 

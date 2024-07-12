@@ -77,7 +77,7 @@ class DoctrineDbalLikeRepository implements LikeRepositoryInterface
             );
         }
         $likes = [];
-        foreach($likesData as $likeData) {
+        foreach ($likesData as $likeData) {
             $likes[] = new Like(
                 $likeData["target_type"],
                 $likeData["target_id"],

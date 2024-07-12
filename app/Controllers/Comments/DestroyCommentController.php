@@ -8,8 +8,6 @@ use App\Message;
 use App\Responses\RedirectResponse;
 use App\Services\Comments\DestroyCommentService;
 use App\Services\Comments\Exceptions\CommentDeletionFailedException;
-use App\Services\Comments\Exceptions\CommentNotFoundException;
-use App\Services\Comments\Exceptions\CommentRetrievalFailedException;
 use App\Services\Comments\GetCommentService;
 use Psr\Log\LoggerInterface;
 

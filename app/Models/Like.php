@@ -18,8 +18,7 @@ class Like
         string $targetId,
         string $id = null,
         Carbon $createdAt = null
-    )
-    {
+    ) {
         $this->targetType = $targetType;
         $this->targetId = $targetId;
         $this->id = $id ?: Uuid::uuid4()->toString();

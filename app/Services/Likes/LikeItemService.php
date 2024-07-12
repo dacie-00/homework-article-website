@@ -3,12 +3,9 @@ declare(strict_types=1);
 
 namespace App\Services\Likes;
 
-use App\Models\Comment;
 use App\Models\Like;
-use App\Repositories\Comments\CommentRepositoryInterface;
 use App\Repositories\Exceptions\InsertionInRepositoryFailedException;
 use App\Repositories\Likes\LikeRepositoryInterface;
-use App\Services\Comments\Exceptions\CommentUpdateFailedException;
 use App\Services\Likes\Exceptions\ItemLikeFailedException;
 
 class LikeItemService
